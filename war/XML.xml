@@ -1,0 +1,36 @@
+<DeviceDataFeed>
+	<ns1:RequestID>41708475</ns1:RequestID>
+	<ns1:RequestType>DD</ns1:RequestType>
+	<ns1:RequestDateTime>2013-10-21T03:23:43.266Z</ns1:RequestDateTime>
+	<ns1:AlerePID>50021023</ns1:AlerePID>
+	<ns1:MemberID>203044</ns1:MemberID>
+	<ns1:ProgramID>5</ns1:ProgramID>
+	<ns1:InterventionTypeID>01</ns1:InterventionTypeID>
+	<ns2:MeasurementList>
+		<ns2:Measurement>
+			<ns2:MeasurementID>6525</ns2:MeasurementID>
+			<ns2:MeasurementType>31</ns2:MeasurementType>
+			<ns2:MeasurementValue>120</ns2:MeasurementValue>
+			<ns1:TransmissionDateTime>2013-10-20T04:11:00.000Z</ns1:TransmissionDateTime>
+			<ns2:UTCCollectedDateTime>2013-10-19T23:11:00.000Z</ns2:UTCCollectedDateTime>
+		</ns2:Measurement>
+	</ns2:MeasurementList>
+	<ns2:SymptomList>
+		<ns2:Symptom>
+			<ns2:SymptomID>6526</ns2:SymptomID>
+						<ns2:SymptomType>84</ns2:SymptomType>
+			<ns2:AnswerID>2</ns2:AnswerID>
+			<ns2:QuestionID>36</ns2:QuestionID>
+			<ns2:UTCCollectedDateTime>2013-10-19T23:11:00.000Z</ns2:UTCCollectedDateTime>
+			<ns1:TransmissionDateTime>2013-10-20T04:11:00.000Z</ns1:TransmissionDateTime>
+		</ns2:Symptom>
+		<ns2:Symptom>
+			<ns2:SymptomID>6527</ns2:SymptomID>
+			<ns2:SymptomType>84</ns2:SymptomType>
+			<ns2:AnswerID>2</ns2:AnswerID>
+			<ns2:QuestionID>43</ns2:QuestionID>
+			<ns2:UTCCollectedDateTime>2013-10-19T23:11:00.000Z</ns2:UTCCollectedDateTime>
+			<ns1:TransmissionDateTime>2013-10-20T04:11:00.000Z</ns1:TransmissionDateTime>
+		</ns2:Symptom>
+	</ns2:SymptomList>
+</DeviceDataFeed>
