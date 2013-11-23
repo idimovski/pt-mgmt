@@ -431,12 +431,6 @@ String emb  = "";
 									<p></p>
 								</li>
 							
-								<!-- <li id="li_10">
-									<div>
-									<label class="description" for="element_10">Дијагноза</label>
-										<textarea id="element_10" name="element_10"
-											class="element textarea large">TBD</textarea>
-									</div></li> -->
 									
 								<li id="li_10"><label class="description" for="element_10">Мерки што треба да се превземат</label>
 									<div>

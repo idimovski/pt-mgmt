@@ -20,6 +20,8 @@ public class SearchICD extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		//added a comment
 
 		String retStr= "";
 		System.out.println("termP" + req.getParameter("term"));
