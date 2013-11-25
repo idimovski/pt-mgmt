@@ -24,7 +24,7 @@ public class SearchICD extends HttpServlet {
 		//added a comment
 
 		String retStr= "";
-		System.out.println("termP: " + req.getParameter("term"));
+		System.out.println("termP : " + req.getParameter("term"));
 		String term ="";
 		if (null != req.getParameter("term")){
 			term = req.getParameter("term");
