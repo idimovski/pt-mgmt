@@ -24,7 +24,7 @@ public class SearchICD extends HttpServlet {
 		//added a comment
 
 		String retStr= "";
-		System.out.println("termP" + req.getParameter("term"));
+		System.out.println("termP: " + req.getParameter("term"));
 		String term ="";
 		if (null != req.getParameter("term")){
 			term = req.getParameter("term");
@@ -77,6 +77,11 @@ public class SearchICD extends HttpServlet {
 					datalist.add(new ICD10(code, subcode, desc));
 				
 				
+					
+				if(datalist.size()>=100){
+					System.out.println("found 100 will break");
+					break;
+				}
 					
 				
 				// read the next line
