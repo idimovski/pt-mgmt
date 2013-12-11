@@ -102,7 +102,7 @@ public class Patientadd extends HttpServlet {
 //
 //		spp_1  stepen na poprechenost
 
-		String dijagnozi = req.getParameter("dijagnozi");
+		String dijagnozi = req.getParameter("dijagnozihidden");
 		
 		String merki = req.getParameter("merki");
 		String podatocizamerki = req.getParameter("podatocizamerki");
@@ -197,7 +197,7 @@ public class Patientadd extends HttpServlet {
 			String roditelgrad, String roditelopshtina, String roditelkod, String roditeldrzava, String baodbroj, String naodden, String naodmesec, String naodgodina, String vidnappop, String dijagnozi, 
 			String merki, String podatocizamerki, String zabeleshki, String redenbr, String promeni) {
 		
-		Entity patient = new Entity("Patient");
+		Entity patient = new Entity("Patient",emb);
 		
 		patient.setProperty("redenbr", redenbr);
 		patient.setProperty("ime", first);
@@ -248,6 +248,7 @@ public class Patientadd extends HttpServlet {
 		patient.setProperty("podatocizamerki", podatocizamerki);
 		patient.setProperty("promeni", promeni);
 		patient.setProperty("zabeleshki", zabeleshki);
+		
 		
 		return patient;
 		

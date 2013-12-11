@@ -168,7 +168,7 @@ String merki = "";String podatocizamerki = "";String promeni = "";String zabeles
 							<ul>
 								<li id="li_1"><label class="description" for="element_1">Реден Број</label>
 									<div>
-										<input id="element_1" name="first"
+										<input id="redenbr" name="redenbr"
 											class="element text small" type="text" maxlength="255"
 											value='<%=redenbr%>' />
 									</div>
@@ -526,8 +526,8 @@ String merki = "";String podatocizamerki = "";String promeni = "";String zabeles
 								
 								<li id="linkeddijagnosis"><label class="description" for="vsnp_7_1">Дијагнози:</label>
 								
-								<div id ='linkeddijagnosisdiv'>
-								<!-- <input id="linkeddijagnosis" name="spp_1" class="element checkbox" type="checkbox" value="1" disabled /><label class="choice" for="linkeddijagnosis">Лесна мантална ретардација</label> -->
+								<div id ='linkeddijagnosisdiv'>									
+									<!-- <input id="linkeddijagnosis" name="spp_1" class="element checkbox" type="checkbox" value="1" disabled /><label class="choice" for="linkeddijagnosis">Лесна мантална ретардација</label> -->
 								</div>
 		
 								</li>
@@ -572,7 +572,8 @@ String merki = "";String podatocizamerki = "";String promeni = "";String zabeles
 					</div>
 					<img id="bottom" src="images/bottom.png" alt="">
 
-
+					<input type='text' id='dijagnozihidden' value=''/>
+					
 					<div class="bottom">
 						<ul>
 							<li style="border-left: medium none;"><a href="index.html">Home</a></li>
@@ -615,9 +616,16 @@ $(function() {
       select: function( event, ui ) {
         log( ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value );
         /*alert(ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value );*/
-        $( "#linkeddijagnosisdiv" ).append("<input id='"+ui.item.id+"' name='selecteddiagnosis' class='element checkbox' type='checkbox' value='1' disabled checked /><label class='choice' for='linkeddijagnosis'>"+ui.item.value +"</label>");
+        $( "#linkeddijagnosisdiv" ).append("<input id='selecteddiagnosis"+ui.item.id+"' name='selecteddiagnosis"+ui.item.id+"' class='element checkbox' type='checkbox' value='1' disabled checked /><label class='choice' for='linkeddijagnosis'>"+ui.item.value +"</label>");
         
+        //$( "#linkeddijagnosisdiv" ).append("<option value="+ui.item.id+"' name='selecteddiagnosis"+ui.item.id+">"+ui.item.value +"</option>");
+        
+        var str = $( "#dijagnozihidden" ).val();
+        str = str + ui.item.id + "|" +ui.item.value;
         $( "#dijagnoza" ).val("");
+        
+        alert(str);
+        
         return false;
         
       }
@@ -637,7 +645,9 @@ $('#vidnappop').change(function() {
 	}
 });
 
-$('#druganacionalnostdiv').hide();
+if( $('#nacionalnost').val() != 'd' ){
+	$('#druganacionalnostdiv').hide();
+}
 $('#nacionalnost').change(function() {
 	
 	if( $('#nacionalnost').val() == 'd' ){
