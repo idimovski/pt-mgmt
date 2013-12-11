@@ -122,14 +122,14 @@ if(null == session.getAttribute("userin")){
 								
 								
 <!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
-								<label class="description" for="element_1"><%=entity.getProperty("first") %></label>
+								<label class="description" for="element_1"><%=entity.getProperty("ime") %></label>
 							</span>
 							</td>
 							<td>
 							<span>
 								
 								<!-- <input id="element_1_2" name= "element_1_2" class="element text" maxlength="255" size="14" value='<%=entity.getProperty("last") %>' disabled/> -->
-								<label class="description" for="element_1"><%=entity.getProperty("last") %></label>
+								<label class="description" for="element_1"><%=entity.getProperty("prezime") %></label>
 								
 							</span> 
 							</li>

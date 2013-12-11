@@ -1,0 +1,54 @@
+redenbr
+ime
+prezime
+pol
+
+dob_1_1 den
+dob_1_2 mesec
+dob_1_3 godina
+
+mesto
+emb
+
+nacionalnost
+druganacionalnost
+
+pacientulica
+pacientgrad
+pacientopshtina
+pacientkod
+pacientdrzava
+
+imenatatkoto
+imenamajkata
+mominskamajka
+
+roditelulica
+roditelgrad
+roditelopshtina
+roditelkod
+roditeldrzava
+
+baodbroj
+
+naod_1_1 den
+naod_1_2 mesec
+naod_1_3 godina
+
+vidnappop
+
+vsnp_7_1  kombiniranvid
+
+spp_1  stepen na poprechenost
+
+dijagnozi
+
+merki
+podatocizamerki
+promeni
+zabeleshki
+
+
+
+
+

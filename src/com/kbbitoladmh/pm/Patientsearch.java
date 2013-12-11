@@ -65,7 +65,7 @@ public class Patientsearch extends HttpServlet {
 
 		
 		
-		Query allptsquesry  = new Query("Patient").addSort("first", SortDirection.ASCENDING);
+		Query allptsquesry  = new Query("Patient").addSort("ime", SortDirection.ASCENDING);
 		
 		
 		

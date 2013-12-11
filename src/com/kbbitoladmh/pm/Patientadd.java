@@ -60,19 +60,60 @@ public class Patientadd extends HttpServlet {
 		MessageHelper mh = new MessageHelper();
 		boolean allRequiredPassed = true;
 		
-		String first = req.getParameter("first");
-		String last = req.getParameter("last");
+		String redenbr = req.getParameter("redenbr");
+		String first = req.getParameter("ime");
+		String last = req.getParameter("prezime");
+		String pol = req.getParameter("pol");
+		
+		String dobden = req.getParameter("dob_1_1");
+		String dobmesec = req.getParameter("dob_1_2");
+		String dobgodina = req.getParameter("dob_1_3");
+		
+		String mesto = req.getParameter("mesto");
 		String emb = req.getParameter("emb");
-		String ptaddress1 = req.getParameter("ptaddress1");
-		String naod = req.getParameter("naod");
+		String nacionalnost = req.getParameter("nacionalnost");
+		String druganacionalnost= req.getParameter("druganacionalnost");
 		
-		Entity patient = new Entity("Patient");
-		patient.setProperty("first", first);
-		patient.setProperty("last", last);
-		patient.setProperty("emb", emb);
-		patient.setProperty("ptaddress1", ptaddress1);
-		patient.setProperty("naod", naod);
+		String pacientulica= req.getParameter("pacientulica");
+		String pacientgrad= req.getParameter("pacientgrad");
+		String pacientopshtina= req.getParameter("pacientopshtina");
+		String pacientkod= req.getParameter("pacientkod");
+		String pacientdrzava= req.getParameter("pacientdrzava");
+	
+		String imenatatkoto= req.getParameter("imenatatkoto");
+		String imenamajkata= req.getParameter("imenamajkata");
+		String mominskamajka= req.getParameter("mominskamajka");
 		
+		String roditelulica= req.getParameter("roditelulica");
+		String roditelgrad= req.getParameter("roditelgrad");
+		String roditelopshtina= req.getParameter("roditelopshtina");
+		String roditelkod= req.getParameter("roditelkod");
+		String roditeldrzava= req.getParameter("roditeldrzava");
+		
+		String baodbroj = req.getParameter("baodbroj");
+		
+		String naodden = req.getParameter("naod_1_1");
+		String naodmesec = req.getParameter("naod_1_2");
+		String naodgodina = req.getParameter("naod_1_3");
+		
+		String vidnappop = req.getParameter("vidnappop");
+		
+//		vsnp_7_1  kombiniranvid
+//
+//		spp_1  stepen na poprechenost
+
+		String dijagnozi = req.getParameter("dijagnozi");
+		
+		String merki = req.getParameter("merki");
+		String podatocizamerki = req.getParameter("podatocizamerki");
+		String promeni = req.getParameter("promeni");
+		String zabeleshki = req.getParameter("zabeleshki");
+
+		
+		Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
+				pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
+				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni);
+			
 		
 		req.setAttribute("pte", patient);
 
@@ -86,26 +127,13 @@ public class Patientadd extends HttpServlet {
 		if(first.length()==0){
 			mh.addMessage(req, "lastname is required");allRequiredPassed = false;
 		}
-		
-		
-		
-		
+			
 		
 		 if(allRequiredPassed == false){
 			 RequestDispatcher d = getServletContext().getRequestDispatcher("/padd.jsp");
 			 d.forward(req, resp);
 		   return;   
-		 }
-		
-		
-		patient = new Entity("Patient", emb);
-		patient.setProperty("first", first);
-		patient.setProperty("last", last);
-		patient.setProperty("emb", emb);
-		patient.setProperty("ptaddress1", ptaddress1);
-		patient.setProperty("naod", naod);
-
-		
+		 }		
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		
@@ -160,6 +188,68 @@ public class Patientadd extends HttpServlet {
 		 d.forward(req, resp);
 		
 		
+		
+	}
+
+
+	private Entity createPatientEntity(String first, String last, String pol, String dobden, String dobmesec, String dobgodina, String mesto, String emb, String nacionalnost, String druganacionalnost, 
+			String pacientulica, String pacientgrad, String pacientopshtina, String pacientkod, String pacientdrzava, String imenatatkoto, String imenamajkata, String mominskamajka, String roditelulica, 
+			String roditelgrad, String roditelopshtina, String roditelkod, String roditeldrzava, String baodbroj, String naodden, String naodmesec, String naodgodina, String vidnappop, String dijagnozi, 
+			String merki, String podatocizamerki, String zabeleshki, String redenbr, String promeni) {
+		
+		Entity patient = new Entity("Patient");
+		
+		patient.setProperty("redenbr", redenbr);
+		patient.setProperty("ime", first);
+		patient.setProperty("prezime", last);
+		patient.setProperty("pol", pol);
+		
+		patient.setProperty("dobden", dobden);
+		patient.setProperty("dobmesec", dobmesec);
+		patient.setProperty("dobgodina", dobgodina);
+		
+		if((null!=dobgodina) && (null!=dobmesec) && (null!=dobden) )
+			patient.setProperty("dobdate", dobgodina+dobmesec+dobden);
+		
+
+		patient.setProperty("mesto", mesto);
+		patient.setProperty("emb", emb);
+		patient.setProperty("nacionalnost", nacionalnost);
+		patient.setProperty("druganacionalnost", druganacionalnost);
+		
+		patient.setProperty("pacientulica", pacientulica);
+		patient.setProperty("pacientgrad", pacientgrad);
+		patient.setProperty("pacientopshtina", pacientopshtina);
+		patient.setProperty("pacientkod", pacientkod);
+		patient.setProperty("pacientdrzava", pacientdrzava);
+		
+		patient.setProperty("imenatatkoto", imenatatkoto);
+		patient.setProperty("imenamajkata", imenamajkata);
+		patient.setProperty("mominskamajka", mominskamajka);
+		
+		patient.setProperty("roditelulica", roditelulica);
+		patient.setProperty("roditelgrad", roditelgrad);
+		patient.setProperty("roditelopshtina", roditelopshtina);
+		patient.setProperty("roditelkod", roditelkod);
+		patient.setProperty("roditeldrzava", roditeldrzava);
+		
+		patient.setProperty("baodbroj", baodbroj);
+		patient.setProperty("naodden", naodden);
+		patient.setProperty("naodmesec", naodmesec);
+		patient.setProperty("naodgodina", naodgodina);
+		
+		if((null!=naodden) && (null!=naodmesec) && (null!=naodgodina) )
+			patient.setProperty("naoddate", naodgodina+naodmesec+naodden);
+		
+		patient.setProperty("vidnappop", vidnappop);
+		
+		patient.setProperty("dijagnozi", dijagnozi);
+		patient.setProperty("merki", merki);
+		patient.setProperty("podatocizamerki", podatocizamerki);
+		patient.setProperty("promeni", promeni);
+		patient.setProperty("zabeleshki", zabeleshki);
+		
+		return patient;
 		
 	}
 	

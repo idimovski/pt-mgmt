@@ -66,16 +66,82 @@ if(null == session.getAttribute("userin")){
 //get entity
 
 Entity e = (Entity) request.getAttribute("pte");
-String fname = "";
-String last  = "";
-String emb  = "";
+String redenbr= "";String fname = ""; String last  = ""; String pol = "";String dobden = "";String dobmesec = "";String dobgodina = "";
+
+String mesto = "";String emb = "";String nacionalnost = "";String druganacionalnost= "";
+
+String pacientulica= "";String pacientgrad= "";String pacientopshtina= "";String pacientkod= "";String pacientdrzava= "";
+
+String imenatatkoto= "";String imenamajkata= "";String mominskamajka= "";
+
+String roditelulica= "";String roditelgrad= "";String roditelopshtina= "";String roditelkod= "";String roditeldrzava= "";
+
+String baodbroj = "";
+
+String naodden = "";String naodmesec = "";String naodgodina = "";
+
+String vidnappop = "";
+
+//vsnp_7_1  kombiniranvid
+//
+//spp_1  stepen na poprechenost
+
+String dijagnozi = "";
+String merki = "";String podatocizamerki = "";String promeni = "";String zabeleshki = "";
+
+
 
 	if(null != e){
-		fname = (String) e.getProperty("first"); if (null == fname) fname = "";
-		last = (String) e.getProperty("last"); if (null == last) last = "";
+		fname = (String) e.getProperty("ime"); if (null == fname) fname = "";
+		last = (String) e.getProperty("prezime"); if (null == last) last = "";
+		pol = (String) e.getProperty("pol"); if (null == pol) pol = "";
+		
+		redenbr = (String) e.getProperty("redenbr"); if (null == redenbr) redenbr = "";
+		
+		
+		dobden = (String) e.getProperty("dobden"); if (null == dobden) dobden = "";
+		dobmesec = (String) e.getProperty("dobmesec"); if (null == dobmesec) dobmesec = "";
+		dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
+		dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
+		mesto = (String) e.getProperty("mesto"); if (null == mesto) mesto = "";
 		emb = (String) e.getProperty("emb"); if (null == emb) emb = "";
+		nacionalnost = (String) e.getProperty("nacionalnost"); if (null == nacionalnost) nacionalnost = "";
+		druganacionalnost = (String) e.getProperty("druganacionalnost"); if (null == druganacionalnost) druganacionalnost = "";
+		pacientulica = (String) e.getProperty("pacientulica"); if (null == pacientulica) pacientulica = "";
+		pacientgrad = (String) e.getProperty("pacientgrad"); if (null == pacientgrad) pacientgrad = "";
+		pacientopshtina = (String) e.getProperty("pacientopshtina"); if (null == pacientopshtina) pacientopshtina = "";
+		pacientkod = (String) e.getProperty("pacientkod"); if (null == pacientkod) pacientkod = "";
+		pacientdrzava = (String) e.getProperty("pacientdrzava"); if (null == pacientdrzava) pacientdrzava = "";
+		
+		imenatatkoto = (String) e.getProperty("imenatatkoto"); if (null == imenatatkoto) imenatatkoto = "";
+		imenamajkata = (String) e.getProperty("imenamajkata"); if (null == imenamajkata) imenamajkata = "";
+		mominskamajka = (String) e.getProperty("mominskamajka"); if (null == mominskamajka) mominskamajka = "";
+		
+		roditelulica = (String) e.getProperty("roditelulica"); if (null == roditelulica) roditelulica = "";
+		roditelgrad = (String) e.getProperty("roditelgrad"); if (null == roditelgrad) roditelgrad = "";
+		roditelopshtina = (String) e.getProperty("roditelopshtina"); if (null == roditelopshtina) roditelopshtina = "";
+		roditelkod = (String) e.getProperty("roditelkod"); if (null == roditelkod) roditelkod = "";
+		roditeldrzava = (String) e.getProperty("roditeldrzava"); if (null == roditeldrzava) roditeldrzava = "";
+		baodbroj = (String) e.getProperty("baodbroj"); if (null == baodbroj) baodbroj = "";
+		
+		naodden = (String) e.getProperty("naodden"); if (null == naodden) naodden = "";
+		naodmesec = (String) e.getProperty("naodmesec"); if (null == naodmesec) naodmesec = "";
+		naodgodina = (String) e.getProperty("naodgodina"); if (null == naodgodina) naodgodina = "";
+		vidnappop = (String) e.getProperty("vidnappop"); if (null == vidnappop) vidnappop = "";
+		
+		dijagnozi = (String) e.getProperty("dijagnozi"); if (null == dijagnozi) dijagnozi = "";
+		merki = (String) e.getProperty("merki"); if (null == merki) merki = "";
+		podatocizamerki = (String) e.getProperty("podatocizamerki"); if (null == podatocizamerki) podatocizamerki = "";
+		promeni = (String) e.getProperty("promeni"); if (null == promeni) promeni = "";
+		zabeleshki = (String) e.getProperty("zabeleshki"); if (null == zabeleshki) zabeleshki = "";
+		
+		
+		
+		
+		
 	}
 
+	
 
 
 %>
@@ -104,7 +170,7 @@ String emb  = "";
 									<div>
 										<input id="element_1" name="first"
 											class="element text small" type="text" maxlength="255"
-											value='<%=fname%>' />
+											value='<%=redenbr%>' />
 									</div>
 									<p class="guidelines" id="guide_2">
 										<small>Име</small>
@@ -113,13 +179,13 @@ String emb  = "";
 
 								
 								<li id="li_2" >
-									<label class="description" for="element_2">Име и презиме </label>
+									<label class="description" for="ime">Име и презиме </label>
 									<span>
-										<input id="element_2_1" name= "element_2_1" class="element text" maxlength="255" size="20" value='<%=fname%>'/>
+										<input id="ime" name= "ime" class="element text" maxlength="255" size="20" value='<%=fname%>'/>
 										<label>Име</label>
 									</span>
 									<span>
-										<input id="element_2_2" name= "element_2_2" class="element text" maxlength="255" size="20" value='<%=last%>'/>
+										<input id="prezime" name= "prezime" class="element text" maxlength="255" size="20" value='<%=last%>'/>
 										<label>Презиме</label>
 									</span> 
 									<p class="guidelines" id="guide_2">
@@ -129,8 +195,7 @@ String emb  = "";
 								
 								<li>
 								<label class="description" for="pol">Пол</label>
-								<select class="element select medium" id="pol"
-											name="pol">
+								<select class="element select medium" id="pol" name="pol">
 											<option value="m" selected="selected">Машки</option>
 											<option value="z" >Женски</option>
 										</select> 
@@ -140,15 +205,15 @@ String emb  = "";
 								<li id="li_1" >
 									<label class="description" for="dob_1">Датум на раѓање </label>
 									<span>
-										<input id="dob_1_1" name="dob_1_1" class="element text" size="2" maxlength="2" value="" type="text"> /
+										<input id="dob_1_1" name="dob_1_1" class="element text" size="2" maxlength="2" value="<%=dobden %>" type="text"> /
 										<label for="dob_1_1">Ден</label>
 									</span>
 									<span>
-										<input id="dob_1_2" name="dob_1_2" class="element text" size="2" maxlength="2" value="" type="text"> /
+										<input id="dob_1_2" name="dob_1_2" class="element text" size="2" maxlength="2" value="<%=dobmesec %>" type="text"> /
 										<label for="dob_1_2">Месец</label>
 									</span>
 									<span>
-								 		<input id="dob_1_3" name="dob_1_3" class="element text" size="4" maxlength="4" value="" type="text">
+								 		<input id="dob_1_3" name="dob_1_3" class="element text" size="4" maxlength="4" value="<%=dobgodina %>" type="text">
 										<label for="dob_1_3">Година</label>
 									</span>
 								
@@ -170,9 +235,9 @@ String emb  = "";
 								
 								<li id="li_21"><label class="description" for="element_21">Место на раѓање</label>
 									<div>
-										<input id="element_21" name="mesto"
+										<input id="mesto" name="mesto"
 											class="element text medium" type="text" maxlength="255"
-											value="" />
+											value="<%=mesto %>" />
 									</div>
 									<p class="guidelines" id="guide_21">
 										<small>Место на Раѓање</small>
@@ -181,7 +246,7 @@ String emb  = "";
 									
 								<li id="li_21"><label class="description" for="element_21">ЕМБГ</label>
 									<div>
-										<input id="element_21" name="emb"
+										<input id="emb" name="emb"
 											class="element text medium" type="text" maxlength="255"
 											value="<%=emb%>" />
 									</div>
@@ -189,35 +254,76 @@ String emb  = "";
 										<small>ЕМБГ</small>
 									</p>
 								</li>
+								
+								
+								
+								
+								<li>
+								<label class="description" for="nacionalnost">Националност</label>
+								<select class="element select medium" id="nacionalnost"
+											name="nacionalnost">
+											<option value="m" <%if(nacionalnost.equals("m")){ %>selected="selected"<%} %> >Македонец/ка</option>
+											<option value="a" <%if(nacionalnost.equals("a")){ %>selected="selected"<%} %>  >Албанец/ка</option>
+											<option value="r" <%if(nacionalnost.equals("r")){ %>selected="selected"<%} %> >Ром/ка</option>
+											<option value="t"  <%if(nacionalnost.equals("t")){ %>selected="selected"<%} %>>Турчин/ка</option>
+											<option value="s" <%if(nacionalnost.equals("s")){ %>selected="selected"<%} %> >Србин/ка</option>
+											<option value="v" <%if(nacionalnost.equals("v")){ %>selected="selected"<%} %> >Влав</option>
+											<option value="e" <%if(nacionalnost.equals("e")){ %>selected="selected"<%} %> >Египјанин/ка</option>
+											<option value="b" <%if(nacionalnost.equals("b")){ %>selected="selected"<%} %> >Бошњак</option>
+											<option value="d" <%if(nacionalnost.equals("d")){ %>selected="selected"<%} %> >Друга</option>
+											
+											
+										</select> 
+										
+								</li>
+								
+								
+								<div id="druganacionalnostdiv">
+									<li id="li_21"><label class="description" for="druganacionalnost">Друга Националност</label>
+										<div>
+											<input id="druganacionalnost" name="druganacionalnost"
+												class="element text medium" type="text" maxlength="255"
+												value="<%=druganacionalnost %>" />
+										</div>
+										<p class="guidelines" id="druganacionalnost">
+											<small>Друга Националност</small>
+										</p>
+									</li>
+								<li class="section_break"><h3></h3><p></p></li>
+								</div>
+								
+								
+								
+								
 								<li id="li_3"><label class="description" for="element_3">Адреса на пациентот</label>
 
 									<div>
-										<input id="element_3_1" name="element_3_1"
-											class="element text large" value="" type="text"> <label
+										<input id="pacientulica" name="pacientulica"
+											class="element text large" value="<%=pacientulica %>" type="text"> <label
 											for="element_3_1">Улица и број</label>
 									</div>
 
 									<div class="left">
-										<input id="element_3_3" name="element_3_3"
-											class="element text medium" value="" type="text"> <label
+										<input id="pacientgrad" name="pacientgrad"
+											class="element text medium" value="<%=pacientgrad %>" type="text"> <label
 											for="element_3_3">Град</label>
 									</div>
 
 									<div class="right">
-										<input id="element_3_4" name="element_3_4"
-											class="element text medium" value="" type="text"> <label
+										<input id="pacientopshtina" name="pacientopshtina"
+											class="element text medium" value="<%=pacientopshtina %>" type="text"> <label
 											for="element_3_4">Општина</label>
 									</div>
 
 									<div class="left">
-										<input id="element_3_5" name="element_3_5"
-											class="element text medium" maxlength="15" value=""
+										<input id="pacientkod" name="pacientkod"
+											class="element text medium" maxlength="15" value="<%=pacientkod %>"
 											type="text"> <label for="element_3_5">Поштенски Код</label>
 									</div>
 
 									<div class="right">
-										<select class="element select medium" id="element_3_6"
-											name="element_3_6">
+										<select class="element select medium" id="pacientdrzava"
+											name="pacientdrzava">
 											<option value="Macedonia" selected="selected">Македонија</option>
 										</select> <label for="element_3_6">Држава</label>
 									</div></li>
@@ -225,66 +331,66 @@ String emb  = "";
 									<h3></h3>
 									<p></p>
 								</li>
-								<li id="li_4"><label class="description" for="element_4">Име на таткото</label>
+								<li id="li_4"><label class="description" for="imenatatkoto">Име на таткото</label>
 									<div>
-										<input id="element_4" name="element_4"
+										<input id="imenatatkoto" name="imenatatkoto"
 											class="element text large" type="text" maxlength="255"
-											value="" />
+											value="<%=imenatatkoto %>" />
 									</div></li>
-								<li id="li_6"><label class="description" for="element_6">Име на мајката</label>
+								<li id="li_6"><label class="description" for="imenamajkata">Име на мајката</label>
 									<div>
-										<input id="element_6" name="element_6"
+										<input id="imenamajkata" name="imenamajkata"
 											class="element text large" type="text" maxlength="255"
-											value="" />
+											value="<%=imenamajkata %>" />
 									</div>
 								</li>
-								<li id="li_6"><label class="description" for="element_6">Моминско име на мајката</label>
+								<li id="li_6"><label class="description" for="mominskamajka">Моминско име на мајката</label>
 									<div>
-										<input id="element_6" name="element_6"
+										<input id="mominskamajka" name="mominskamajka"
 											class="element text large" type="text" maxlength="255"
-											value="" />
+											value="<%=mominskamajka %>" />
 									</div>
 								</li>
-								<li id="li_7"><label class="description" for="element_7">Адреса на родителите</label>
+								<li id="li_7"><label class="description" for="roditelulica">Адреса на родителите</label>
 
 									<div>
-										<input id="element_7_1" name="element_7_1"
-											class="element text large" value="" type="text"> <label
+										<input id="roditelulica" name="roditelulica"
+											class="element text large" value="<%=roditelulica %>" type="text"> <label
 											for="element_7_1">Улица и број</label>
 									</div>
 
 									<div class="left">
-										<input id="element_7_3" name="element_7_3"
-											class="element text medium" value="" type="text"> <label
+										<input id="roditelgrad" name="roditelgrad"
+											class="element text medium" value="<%=roditelgrad %>" type="text"> <label
 											for="element_7_3">Град</label>
 									</div>
 
 									<div class="right">
-										<input id="element_7_4" name="element_7_4"
-											class="element text medium" value="" type="text"> <label
+										<input id="roditelopshtina" name="roditelopshtina"
+											class="element text medium" value="<%=roditelopshtina %>" type="text"> <label
 											for="element_7_4">Општина</label>
 									</div>
 
 									<div class="left">
-										<input id="element_7_5" name="element_7_5"
-											class="element text medium" maxlength="15" value=""
+										<input id="roditelkod" name="roditelkod"
+											class="element text medium" maxlength="15" value="<%=roditelkod %>"
 											type="text"> <label for="element_7_5">Поштенски Код</label>
 									</div>
 
 									<div class="right">
-										<select class="element select medium" id="element_7_6"
-											name="element_7_6">
+										<select class="element select medium" id="roditeldrzava"
+											name="roditeldrzava">
 											<option value="Macedonia" selected="selected">Македонија</option>
 
 										</select> <label for="element_7_6">Држава</label>
 									</div>
 								<li class="section_break"/>
 								
-								<li id="li_21"><label class="description" for="element_21">Број на наодот со кој лицето е распоредено</label>
+								<li id="li_21"><label class="description" for="baodbroj">Број на наодот со кој лицето е распоредено</label>
 									<div>
-										<input id="element_21" name="emb"
+										<input id="baodbroj" name="baodbroj"
 											class="element text medium" type="text" maxlength="255"
-											value="" />
+											value="<%=baodbroj %>" />
 									</div>
 									<p class="guidelines" id="guide_21">
 										<small>ЕМБГ</small>
@@ -294,15 +400,15 @@ String emb  = "";
 								<li id="datumnanaodot" >
 									<label class="description" for="datumnanaodot">Датум кога е издаден наодот</label>
 									<span>
-										<input id="naod_1_1" name="naod_1_1" class="element text" size="2" maxlength="2" value="" type="text"> /
+										<input id="naod_1_1" name="naod_1_1" class="element text" size="2" maxlength="2" value="<%=naodden%>" type="text"> /
 										<label for="naod1">Ден</label>
 									</span>
 									<span>
-										<input id="naod_1_2" name="naod_1_2" class="element text" size="2" maxlength="2" value="" type="text"> /
+										<input id="naod_1_2" name="naod_1_2" class="element text" size="2" maxlength="2" value="<%=naodmesec%>" type="text"> /
 										<label for="naod2">Месец</label>
 									</span>
 									<span>
-								 		<input id="naod_1_3" name="naod_1_3" class="element text" size="4" maxlength="4" value="" type="text">
+								 		<input id="naod_1_3" name="naod_1_3" class="element text" size="4" maxlength="4" value="<%=naodgodina %>" type="text">
 										<label for="naod3">Година</label>
 									</span>
 								
@@ -411,7 +517,7 @@ String emb  = "";
 									
 								<li id="dijagnozaLi"><label class="description" for="dijagnoza">Пребарај Дијагноза</label>
 									<div class="ui-widget">
-										<input id="dijagnoza" name="mesto" class="" type="text" maxlength="255"	value="" style="width=100%" />
+										<input id="dijagnoza" name="dijagnoza" class="" type="text" maxlength="255"	value="" style="width=100%" />
 									</div>
 									<p class="guidelines" id="guide_21">
 										<small>Пребарај Дијагноза</small>
@@ -434,24 +540,24 @@ String emb  = "";
 									
 								<li id="li_10"><label class="description" for="element_10">Мерки што треба да се превземат</label>
 									<div>
-										<textarea id="element_10" name="element_10"
-											class="element textarea large"></textarea>
+										<textarea id="merki" name="merki"
+											class="element textarea large"><%=merki %></textarea>
 									</div></li>
 								<li id="li_11"><label class="description" for="element_11">Податоци за превземените мерки</label>
 									<div>
-										<textarea id="element_11" name="element_11"
-											class="element textarea large"></textarea>
+										<textarea id="podatocizamerki" name="podatocizamerki"
+											class="element textarea large"><%=podatocizamerki %></textarea>
 									</div></li>
 								<li id="li_12"><label class="description" for="element_12">Евентуални промени</label>
 									<div>
-										<textarea id="element_12" name="element_12"
-											class="element textarea large"></textarea>
+										<textarea id="promeni" name="promeni"
+											class="element textarea large"><%=promeni %></textarea>
 									</div></li>
 									
 								<li id="li_12"><label class="description" for="element_12">Забелешки</label>
 									<div>
-										<textarea id="element_12" name="element_12"
-											class="element textarea large"></textarea>
+										<textarea id="zabeleshki" name="zabeleshki"
+											class="element textarea large"><%=zabeleshki %></textarea>
 									</div></li>
 
 								<li class="buttons"><input type="hidden" name="form_id"
@@ -530,6 +636,20 @@ $('#vidnappop').change(function() {
 		$('#kombiniranvid').hide();
 	}
 });
+
+$('#druganacionalnostdiv').hide();
+$('#nacionalnost').change(function() {
+	
+	if( $('#nacionalnost').val() == 'd' ){
+		$('#druganacionalnostdiv').show();	
+		
+	}else{
+		$('#druganacionalnostdiv').hide();
+	}
+});
+
+
+
 </script>
 </body>
 </html>
