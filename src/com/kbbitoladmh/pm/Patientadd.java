@@ -103,6 +103,7 @@ public class Patientadd extends HttpServlet {
 //		spp_1  stepen na poprechenost
 
 		String dijagnozi = req.getParameter("dijagnozihidden");
+		System.out.println(dijagnozi);
 		
 		String merki = req.getParameter("merki");
 		String podatocizamerki = req.getParameter("podatocizamerki");
