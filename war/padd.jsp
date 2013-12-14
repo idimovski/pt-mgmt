@@ -451,6 +451,7 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 								</li>
 								
 								<!-- Show if vid na pop = 8  -->
+								<!-- Show if vid na pop = 8  -->
 											
 								<div id='kombiniranvid'>								
 								<li id="kombiniranvid" >
