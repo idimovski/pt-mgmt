@@ -54,18 +54,29 @@ public class Patientsearch extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("do search called");
+		
 		MessageHelper mh = new MessageHelper();
 		boolean allRequiredPassed = true;
 		
-		String first = req.getParameter("first");
-		String last = req.getParameter("last");
+		String first = req.getParameter("ime");
+		String last = req.getParameter("prezime");
 		String emb = req.getParameter("emb");
+		String redenbroj = req.getParameter("redenbr");
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
 		
 		
 		Query allptsquesry  = new Query("Patient").addSort("ime", SortDirection.ASCENDING);
+		
+		if(!("".equals(first))) allptsquesry.addFilter("imeCL",FilterOperator.EQUAL,first.toLowerCase());
+		if(!("".equals(last))) allptsquesry.addFilter("prezimeCL",FilterOperator.EQUAL,last.toLowerCase());
+		if(!("".equals(emb))) allptsquesry.addFilter("emb",FilterOperator.EQUAL,emb);
+		if(!("".equals(redenbroj))) allptsquesry.addFilter("redenbr",FilterOperator.EQUAL,redenbroj);
+		
+		
+		
+		//Query getptbyid = new Query("Patient").addFilter("emb", FilterOperator.EQUAL, emb);
 		
 		
 		

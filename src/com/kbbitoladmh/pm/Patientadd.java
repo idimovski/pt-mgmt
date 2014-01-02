@@ -2,11 +2,10 @@ package com.kbbitoladmh.pm;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.datastore.Transaction;
 import com.kbbitoladmh.pm.util.MessageHelper;
 
@@ -97,13 +93,15 @@ public class Patientadd extends HttpServlet {
 		String naodgodina = req.getParameter("naod_1_3");
 		
 		String vidnappop = req.getParameter("vidnappop");
-		
-//		vsnp_7_1  kombiniranvid
-//
-//		spp_1  stepen na poprechenost
 
-		String dijagnozi = req.getParameter("dijagnozihidden");
-		System.out.println(dijagnozi);
+
+		Text dijagnozi = new Text(req.getParameter("dijagnozDescihidden"));
+		System.out.println(dijagnozi.getValue());
+		
+		String kombiniranvid = req.getParameter("kombiniraniprechkihidden");
+		String stepennapop = req.getParameter("stepennapoprecenosthidden");
+		
+		
 		
 		String merki = req.getParameter("merki");
 		String podatocizamerki = req.getParameter("podatocizamerki");
@@ -113,7 +111,7 @@ public class Patientadd extends HttpServlet {
 		
 		Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
 				pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
-				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni);
+				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop);
 			
 		
 		req.setAttribute("pte", patient);
@@ -195,14 +193,16 @@ public class Patientadd extends HttpServlet {
 
 	private Entity createPatientEntity(String first, String last, String pol, String dobden, String dobmesec, String dobgodina, String mesto, String emb, String nacionalnost, String druganacionalnost, 
 			String pacientulica, String pacientgrad, String pacientopshtina, String pacientkod, String pacientdrzava, String imenatatkoto, String imenamajkata, String mominskamajka, String roditelulica, 
-			String roditelgrad, String roditelopshtina, String roditelkod, String roditeldrzava, String baodbroj, String naodden, String naodmesec, String naodgodina, String vidnappop, String dijagnozi, 
-			String merki, String podatocizamerki, String zabeleshki, String redenbr, String promeni) {
+			String roditelgrad, String roditelopshtina, String roditelkod, String roditeldrzava, String baodbroj, String naodden, String naodmesec, String naodgodina, String vidnappop, Text dijagnozi, 
+			String merki, String podatocizamerki, String zabeleshki, String redenbr, String promeni, String kombiniranVid, String stepenNaPop) {
 		
 		Entity patient = new Entity("Patient",emb);
 		
 		patient.setProperty("redenbr", redenbr);
 		patient.setProperty("ime", first);
+		patient.setProperty("imeCL", first.toLowerCase());
 		patient.setProperty("prezime", last);
+		patient.setProperty("prezimeCL", last.toLowerCase());
 		patient.setProperty("pol", pol);
 		
 		patient.setProperty("dobden", dobden);
@@ -243,8 +243,30 @@ public class Patientadd extends HttpServlet {
 			patient.setProperty("naoddate", naodgodina+naodmesec+naodden);
 		
 		patient.setProperty("vidnappop", vidnappop);
+		patient.setProperty("kombiniranVid", kombiniranVid);
+		
+		patient.setProperty("stepenNaPop", stepenNaPop);
+		
+		
+		List<String> dijagnoziHash = new ArrayList();
+		List  listdijagnozi = new ArrayList<>();
+		
+		StringTokenizer dijagnoziTok  = new StringTokenizer(dijagnozi.getValue(), "%%");  
+		
+		while (dijagnoziTok.hasMoreElements()) {
+			StringTokenizer secodntok = new StringTokenizer((String)dijagnoziTok.nextElement(), "||");
+			
+			String id = (String) secodntok.nextElement();
+			String desc = (String) secodntok.nextElement();
+			listdijagnozi.add(id);
+			
+			dijagnoziHash.add(id + "%%" + desc);
+			
+		}
 		
 		patient.setProperty("dijagnozi", dijagnozi);
+		patient.setProperty("dijagnoziIdList", listdijagnozi);
+		patient.setProperty("dijagnoziHash", dijagnoziHash);
 		patient.setProperty("merki", merki);
 		patient.setProperty("podatocizamerki", podatocizamerki);
 		patient.setProperty("promeni", promeni);

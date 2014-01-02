@@ -61,16 +61,20 @@ if(null == session.getAttribute("userin")){
 							<ul>
 								<li style="width:100%">
 								<span>
-									<label class="description" for="element_2">ЕМБ</label>
-									<input id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="15" value=""/>
+									<label class="description" for="redenbr">Реден Број</label>
+									<input id="redenbr" name= "redenbr" class="element text" maxlength="255" size="15" value=""/>
 								</span>
 								<span>
-									<label class="description" for="element_2">Име</label>
-									<input id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="15" value=""/>
+									<label class="description" for="emb">ЕМБ</label>
+									<input id="emb" name= "emb" class="element text" maxlength="255" size="15" value=""/>
 								</span>
 								<span>
-									<label class="description" for="element_2">Презиме</label>
-									<input id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="15" value=""/>
+									<label class="description" for="ime">Име</label>
+									<input id="ime" name= "ime" class="element text" maxlength="255" size="15" value=""/>
+								</span>
+								<span>
+									<label class="description" for="prezime">Презиме</label>
+									<input id="prezime" name= "prezime" class="element text" maxlength="255" size="15" value=""/>
 								</span>
 								</li>
 							</ul>
@@ -98,6 +102,7 @@ if(null == session.getAttribute("userin")){
 						
 						<table border="0" width="100%">
 						<tr>
+						<td>Реден Број</td>
 						<td>ЕМБ</td>
 						<td>Име</td>
 						<td>Презиме</td>
@@ -110,6 +115,13 @@ if(null == session.getAttribute("userin")){
 							%>
 							<li id="li_1" >
 							<tr>
+							<td width="100px">
+							<span style="width=100%">
+								
+<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("redenbr") %>' disabled/> -->
+								<label class="description" for="element_1"><%=entity.getProperty("redenbr") %></label>
+							</span>
+							</td>
 							<td width="100px">
 							<span style="width=100%">
 								

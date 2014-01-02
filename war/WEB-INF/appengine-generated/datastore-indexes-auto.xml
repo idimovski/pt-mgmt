@@ -1,4 +1,23 @@
-<!-- Indices written at Fri, 13 Dec 2013 23:57:27 UTC -->
+<!-- Indices written at Thu, 2 Jan 2014 23:13:14 UTC -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 5 times in query history -->
+    <datastore-index kind="Patient" ancestor="false" source="auto">
+        <property name="imeCL" direction="asc"/>
+        <property name="ime" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 7 times in query history -->
+    <datastore-index kind="Patient" ancestor="false" source="auto">
+        <property name="redenbr" direction="asc"/>
+        <property name="ime" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 6 times in query history -->
+    <datastore-index kind="Patient" ancestor="false" source="auto">
+        <property name="emb" direction="asc"/>
+        <property name="ime" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

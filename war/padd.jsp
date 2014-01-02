@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.StringTokenizer"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.List"%>
@@ -5,6 +6,7 @@
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page import="com.google.appengine.api.datastore.Entity"%>
+<%@ page import="com.google.appengine.api.datastore.Text"%> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
@@ -81,16 +83,21 @@ String baodbroj = "";
 
 String naodden = "";String naodmesec = "";String naodgodina = "";
 
-String vidnappop = "";
+String vidnappop = ""; String kombiniranVid = ""; String stepenNaPop = "";
 
-//vsnp_7_1  kombiniranvid
-//
-//spp_1  stepen na poprechenost
 
 String dijagnozi = "";
+List dijagnoziHash = new ArrayList();
+List dijagnoziIdList = new ArrayList();
+
+
+
 String merki = "";String podatocizamerki = "";String promeni = "";String zabeleshki = "";
 StringTokenizer tokdijagnozi = new StringTokenizer("");
-
+StringTokenizer tokkombiniranVid = new StringTokenizer("");
+StringTokenizer tokstepenNaPop = new StringTokenizer("");
+ArrayList kombiniranVidList = new ArrayList();
+ArrayList stepenNaPopList = new ArrayList();
 
 	if(null != e){
 		fname = (String) e.getProperty("ime"); if (null == fname) fname = "";
@@ -130,15 +137,31 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 		naodgodina = (String) e.getProperty("naodgodina"); if (null == naodgodina) naodgodina = "";
 		vidnappop = (String) e.getProperty("vidnappop"); if (null == vidnappop) vidnappop = "";
 		
-		dijagnozi = (String) e.getProperty("dijagnozi"); if (null == dijagnozi) dijagnozi = "";
+		kombiniranVid = (String) e.getProperty("kombiniranVid"); if (null == kombiniranVid) kombiniranVid = "";
+		stepenNaPop = (String) e.getProperty("stepenNaPop"); if (null == stepenNaPop) stepenNaPop = "";
+		
+		dijagnozi = ((Text) e.getProperty("dijagnozi")).getValue(); if (null == dijagnozi) dijagnozi = "";
 		merki = (String) e.getProperty("merki"); if (null == merki) merki = "";
 		podatocizamerki = (String) e.getProperty("podatocizamerki"); if (null == podatocizamerki) podatocizamerki = "";
 		promeni = (String) e.getProperty("promeni"); if (null == promeni) promeni = "";
 		zabeleshki = (String) e.getProperty("zabeleshki"); if (null == zabeleshki) zabeleshki = "";
 		
+		if(null != e.getProperty("dijagnoziHash"))	dijagnoziHash = (List) e.getProperty("dijagnoziHash");
+		if(null != e.getProperty("dijagnoziIdList"))	dijagnoziIdList = (List)  e.getProperty("dijagnoziIdList");
+		
 		
 		
 		tokdijagnozi = new StringTokenizer(dijagnozi, ",");
+		
+		tokkombiniranVid = new StringTokenizer(kombiniranVid, ",");
+		
+		while (tokkombiniranVid.hasMoreTokens())
+			kombiniranVidList.add(tokkombiniranVid.nextToken());
+		
+		tokstepenNaPop = new StringTokenizer(stepenNaPop, ",");
+		
+		while (tokstepenNaPop.hasMoreTokens())
+				stepenNaPopList.add(tokstepenNaPop.nextToken());
 		
 		
 		
@@ -166,7 +189,7 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 
 						<form id="form_740480" class="appnitro" method="post" action="add">
 							<div class="form_description">
-								<h2>Нов Пациент</h2>
+								<h2>Пациент</h2>
 
 							</div>
 							<ul>
@@ -200,8 +223,8 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 								<li>
 								<label class="description" for="pol">Пол</label>
 								<select class="element select medium" id="pol" name="pol">
-											<option value="m" selected="selected">Машки</option>
-											<option value="z" >Женски</option>
+											<option value="m" <%if (pol.equals("m")) {%>selected="selected"<%} %>>Машки</option>
+											<option value="z" <%if (pol.equals("z")) {%>selected="selected"<%} %>>Женски</option>
 										</select> 
 										
 								</li>
@@ -457,19 +480,19 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 								<li id="kombiniranvid" >
 								<label class="description" for="element_7">Вид на комбинирана психофизичка попреченост: </label>
 								<span>
-								<input id="vsnp_7_1" name="vsnp_7_1" class="element checkbox" type="checkbox" value="1" />
+								<input id="vsnp_7_1" name="vsnp_7_1" class="element checkbox" type="checkbox" value="1" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("1")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_1">Пречки во психичкиот развој</label>
-								<input id="vsnp_7_2" name="vsnp_7_2" class="element checkbox" type="checkbox" value="2" />
+								<input id="vsnp_7_2" name="vsnp_7_2" class="element checkbox" type="checkbox" value="2" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("2")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_2">Пречки во физичкиот развој</label>
-								<input id="vsnp_7_3" name="vsnp_7_3" class="element checkbox" type="checkbox" value="3" />
+								<input id="vsnp_7_3" name="vsnp_7_3" class="element checkbox" type="checkbox" value="3" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("3")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_3">Хронично болно лице</label>
-								<input id="vsnp_7_4" name="vsnp_7_4" class="element checkbox" type="checkbox" value="4" />
+								<input id="vsnp_7_4" name="vsnp_7_4" class="element checkbox" type="checkbox" value="4" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("4")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_4">Пречки во видот</label>
-								<input id="vsnp_7_5" name="vsnp_7_5" class="element checkbox" type="checkbox" value="5" />
+								<input id="vsnp_7_5" name="vsnp_7_5" class="element checkbox" type="checkbox" value="5" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("5")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_5">Пречки во слухот</label>
-								<input id="vsnp_7_6" name="vsnp_7_6" class="element checkbox" type="checkbox" value="6" />
+								<input id="vsnp_7_6" name="vsnp_7_6" class="element checkbox" type="checkbox" value="6" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("6")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_6">Пречки во говорот, гласот и јазикот</label>
-								<input id="vsnp_7_7" name="vsnp_7_7" class="element checkbox" type="checkbox" value="7" />
+								<input id="vsnp_7_7" name="vsnp_7_7" class="element checkbox" type="checkbox" value="7" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("7")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_7">Аутизам</label>
 								<!-- <input id="vsnp_7_8" name="vsnp_7_8" class="element checkbox" type="checkbox" value="3" />
 								<label class="choice" for="vsnp_7_8">Комбинирани пречки (можат да бидат сите претходни комбинации)</label> -->
@@ -486,27 +509,28 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 									
 									<label class="description" for="element_4">Степен на попреченост:</label>
 									
+									
 									<span>
-									<input id="spp_1" name="spp_1" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_1">Лесна мантална ретардација</label>
-									<input id="spp_2" name="spp_2" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_2">Умерена ментална ретардација</label>
-									<input id="spp_3" name="spp_3" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_3">Тешка ментална ретардација</label>
-									<input id="spp_4" name="spp_4" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_4">Длабока ментална ретардација</label>
-									<input id="spp_5" name="spp_5" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_5">Тешка телесна инвалидност</label>
-									<input id="spp_6" name="spp_6" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_6">Потешка телесна инвалидност</label>
-									<input id="spp_7" name="spp_7" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_7">Најтешка телесна инвалидност</label>
-									<input id="spp_8" name="spp_8" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_8">Најтешка форма на хронично заболување</label>
-									<input id="spp_9" name="spp_9" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_9">Слабовидно лице</label>
-									<input id="spp_10" name="spp_10" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_10">Слепо лице</label>
-									<input id="spp_11" name="spp_11" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_11">Практично слепо лице</label>
-									<input id="spp_12" name="spp_12" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_12">Наглуво лице</label>
-									<input id="spp_13" name="spp_13" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_13">Глуво лице - Практично глуво лице</label>
-									<input id="spp_14" name="spp_14" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_14">Глуво лице - Тотално глуво лице</label>
-									<input id="spp_15" name="spp_15" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_15">Лице со потполно отсуство на говор -Алалија</label>
-									<input id="spp_16" name="spp_16" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_16">Лице со патолошки развоен говор</label>
-									<input id="spp_17" name="spp_17" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_17">Лице со тешка назализација- Ринолалија</label>
-									<input id="spp_18" name="spp_18" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_18">Лице со отсуство и тешко оштетување на гласот – Афонија и Дисфонија</label>
-									<input id="spp_19" name="spp_19" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_19">Лице со тешко оштетен говор заради детска парализа</label>
-									<input id="spp_20" name="spp_20" class="element checkbox" type="checkbox" value="1" /><label class="choice" for="spp_20">Лице со оштетен или изгубен порано стекнат говор – Афазија и Дисфазија</label>
+									<input id="spp_1" name="spp_1" class="element checkbox" <% if (stepenNaPopList.contains("1")){ %> checked <% }%>  type="checkbox" value="1"  onchange="setKPValue(this,'stepen')" /><label class="choice" for="spp_1">Лесна мантална ретардација</label>
+									<input id="spp_2" name="spp_2" class="element checkbox" <% if (stepenNaPopList.contains("2")){ %> checked <% }%>  type="checkbox" value="2" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_2">Умерена ментална ретардација</label>
+									<input id="spp_3" name="spp_3" class="element checkbox" <% if (stepenNaPopList.contains("3")){ %> checked <% }%>  type="checkbox" value="3" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_3">Тешка ментална ретардација</label>
+									<input id="spp_4" name="spp_4" class="element checkbox" <% if (stepenNaPopList.contains("4")){ %> checked <% }%>  type="checkbox" value="4" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_4">Длабока ментална ретардација</label>
+									<input id="spp_5" name="spp_5" class="element checkbox" <% if (stepenNaPopList.contains("5")){ %> checked <% }%>  type="checkbox" value="5" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_5">Тешка телесна инвалидност</label>
+									<input id="spp_6" name="spp_6" class="element checkbox" <% if (stepenNaPopList.contains("6")){ %> checked <% }%>  type="checkbox" value="6" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_6">Потешка телесна инвалидност</label>
+									<input id="spp_7" name="spp_7" class="element checkbox" <% if (stepenNaPopList.contains("7")){ %> checked <% }%>  type="checkbox" value="7" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_7">Најтешка телесна инвалидност</label>
+									<input id="spp_8" name="spp_8" class="element checkbox" <% if (stepenNaPopList.contains("8")){ %> checked <% }%>  type="checkbox" value="8" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_8">Најтешка форма на хронично заболување</label>
+									<input id="spp_9" name="spp_9" class="element checkbox" <% if (stepenNaPopList.contains("9")){ %> checked <% }%>  type="checkbox" value="9" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_9">Слабовидно лице</label>
+									<input id="spp_10" name="spp_10" class="element checkbox" <% if (stepenNaPopList.contains("10")){ %> checked <% }%>  type="checkbox" value="10" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_10">Слепо лице</label>
+									<input id="spp_11" name="spp_11" class="element checkbox" <% if (stepenNaPopList.contains("11")){ %> checked <% }%>  type="checkbox" value="11" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_11">Практично слепо лице</label>
+									<input id="spp_12" name="spp_12" class="element checkbox" <% if (stepenNaPopList.contains("12")){ %> checked <% }%>  type="checkbox" value="12" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_12">Наглуво лице</label>
+									<input id="spp_13" name="spp_13" class="element checkbox" <% if (stepenNaPopList.contains("13")){ %> checked <% }%>  type="checkbox" value="13" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_13">Глуво лице - Практично глуво лице</label>
+									<input id="spp_14" name="spp_14" class="element checkbox" <% if (stepenNaPopList.contains("14")){ %> checked <% }%>  type="checkbox" value="14" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_14">Глуво лице - Тотално глуво лице</label>
+									<input id="spp_15" name="spp_15" class="element checkbox" <% if (stepenNaPopList.contains("15")){ %> checked <% }%>  type="checkbox" value="15" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_15">Лице со потполно отсуство на говор -Алалија</label>
+									<input id="spp_16" name="spp_16" class="element checkbox" <% if (stepenNaPopList.contains("16")){ %> checked <% }%>  type="checkbox" value="16" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_16">Лице со патолошки развоен говор</label>
+									<input id="spp_17" name="spp_17" class="element checkbox" <% if (stepenNaPopList.contains("17")){ %> checked <% }%>  type="checkbox" value="17" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_17">Лице со тешка назализација- Ринолалија</label>
+									<input id="spp_18" name="spp_18" class="element checkbox" <% if (stepenNaPopList.contains("18")){ %> checked <% }%>  type="checkbox" value="18" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_18">Лице со отсуство и тешко оштетување на гласот – Афонија и Дисфонија</label>
+									<input id="spp_19" name="spp_19" class="element checkbox" <% if (stepenNaPopList.contains("19")){ %> checked <% }%>  type="checkbox" value="19" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_19">Лице со тешко оштетен говор заради детска парализа</label>
+									<input id="spp_20" name="spp_20" class="element checkbox" <% if (stepenNaPopList.contains("20")){ %> checked <% }%>  type="checkbox" value="20" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_20">Лице со оштетен или изгубен порано стекнат говор – Афазија и Дисфазија</label>
 							
 									
 									</span>
@@ -532,17 +556,21 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 								<li id="linkeddijagnosis"><label class="description" for="vsnp_7_1">Дијагнози:</label>
 								
 								<div id ='linkeddijagnosisdiv'>				
-								<% while(tokdijagnozi.hasMoreTokens()){
-									String dijagnoza  =  tokdijagnozi.nextToken();
-									StringTokenizer ednaDijagnoza = new StringTokenizer(dijagnoza,"|");
+								<%
+								
+								String dijagnoziIDString = "";
+								
+								for(int i=0; i< dijagnoziHash.size();i++){
 									
-									String dijagnozaId = ednaDijagnoza.nextToken();
-									String dijagnozaOpis = "";
-									if(ednaDijagnoza.hasMoreTokens())
-										dijagnozaOpis = ednaDijagnoza.nextToken();
+									StringTokenizer stdijt = new StringTokenizer((String)dijagnoziHash.get(i),"%%");
+									String dijagnozaId= stdijt.nextToken();
+									String dijagnozaOpis = stdijt.nextToken();
+									dijagnoziIDString = dijagnoziIDString + dijagnozaId + "%%";
+									
 									
 								%>
-								<input id='selecteddiagnosis<%=dijagnozaId%>' name='selecteddiagnosis<%=dijagnozaOpis %>' class='element checkbox' type='checkbox' value='1' disabled checked /><label class='choice' for='linkeddijagnosis'><%=dijagnozaOpis%></label>					
+								<input id='selecteddiagnosis<%=dijagnozaId%>' name='selecteddiagnosis<%=dijagnozaOpis %>' class='element checkbox' type='checkbox' value='1' checked  onchange="removediagnosis('<%=dijagnozaId%>')" /><label id='selecteddiagnosislabel<%=dijagnozaId%>' class='choice' for='selecteddiagnosis<%=dijagnozaOpis %>'><%=dijagnozaOpis%></label>
+													
 								<%} %>
 								</div>
 		
@@ -581,7 +609,10 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 									type="submit" name="submit" value="  Зачувај   " /></li>
 									
 							</ul>
-							<input type="text" name="dijagnozihidden" id="dijagnozihidden" value="<%=dijagnozi%>"/>
+							<input type="hidden" name="dijagnozihidden" id="dijagnozihidden" value="<%=dijagnoziIDString%>"/>
+							<input type="hidden" name="dijagnozDescihidden" id="dijagnozDescihidden" value=""/>
+							<input type="hidden" name="kombiniraniprechkihidden" id="kombiniraniprechkihidden" value="<%=kombiniranVid%>"/>
+							<input type="hidden" name="stepennapoprecenosthidden" id="stepennapoprecenosthidden" value="<%=stepenNaPop%>"/>
 						</form>
 						<div id="footer">
 							Generated by <a href="http://www.phpform.org">pForm</a>
@@ -589,28 +620,12 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 					</div>
 					<img id="bottom" src="images/bottom.png" alt="">
 
+<div style="display:none">
+<div id="dialog-modal" title="Внимание !!!">
+  <p>Пациентот со овој матичен број веќе постои.</p></div></div>
 					
 					
-					<div class="bottom">
-						<ul>
-							<li style="border-left: medium none;"><a href="index.html">Home</a></li>
-							<li><a href="#">About&nbsp;Us</a></li>
-							<li><a href="#">What's&nbsp;New</a></li>
-							<li><a href="#">Services</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Resources</a></li>
-							<li><a href="#">Links</a></li>
-						</ul>
-						<!--DO NOT Remove The Footer Links-->
-						<p>
-							&copy; Copyright 2010. Designed by <a target="_blank"
-								href="http://www.htmltemplates.net">htmltemplates.net</a>
-						</p>
-						<!--Designed by-->
-						<a href="http://www.htmltemplates.net"> <img
-							src="images/footnote.gif" class="copyright" alt="html templates">
-						</a>
-					</div>
+					
 					<!--In partnership with-->
 					<a href="http://www.casinotemplates.net"> <img
 						src="images/footnote.gif" class="copyright"
@@ -621,6 +636,73 @@ StringTokenizer tokdijagnozi = new StringTokenizer("");
 			</div>
 		</div>
 <script type="text/javascript">
+
+var listOfDijagnisisJS = 
+
+$("#saveForm").click(function() {
+	var completeStr = "";
+	var str = $( "#dijagnozihidden" ).val();
+	var all =  str.split("%%");
+	
+	for ( var i = 0; i < all.length; i++ ){
+		if(all[i].length > 0){
+			//alert(all[i] + $("#selecteddiagnosislabel" + all[i]).text());
+			completeStr = completeStr + all[i] + "||" + $("#selecteddiagnosislabel" + all[i]).text() + "%%" ;
+		}
+		
+	}
+	
+	$( "#dijagnozDescihidden" ).val(completeStr);
+	
+   
+});
+
+
+function removediagnosis(did){
+	//alert("#selecteddiagnosis"+ did);
+	var str = $( "#dijagnozihidden" ).val();
+	 
+	
+	 
+	var inputbox  = $( "#selecteddiagnosis"+ did );
+	var inputlabel  = $( "#selecteddiagnosislabel"+ did );
+	 
+	 
+	//alert(inputlabel.text());
+	
+	var texttoremove = did + "%%";
+	str = str.replace(texttoremove,"");
+	
+	$( "#dijagnozihidden" ).val(str);
+	 
+	inputbox.remove();
+	inputlabel.remove();
+};
+
+function setKPValue(value,type){
+	
+	var hidden = null;
+	var string = null;
+	
+	if(type == 'vid'){
+		hidden = $( "#kombiniraniprechkihidden" );
+	}
+	if(type == 'stepen'){
+		hidden = $( "#stepennapoprecenosthidden" );
+	}
+	
+	 var str = hidden.val();  
+	if(value.checked){  
+		  str = str + "," + value.value;
+		  hidden.val(str);	
+	}else{  
+		str = str.replace("," + value.value,"");
+		//alert(str)
+		hidden.val(str);
+	}
+	
+};
+
 $(function() {
     function log( message ) {
       $( "<div>" ).text( message ).prependTo( "#log" );
@@ -633,16 +715,21 @@ $(function() {
       select: function( event, ui ) {
         log( ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value );
         /*alert(ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value );*/
-        $( "#linkeddijagnosisdiv" ).append("<input id='selecteddiagnosis"+ui.item.id+"' name='selecteddiagnosis"+ui.item.id+"' class='element checkbox' type='checkbox' value='1' disabled checked /><label class='choice' for='linkeddijagnosis'>"+ui.item.value +"</label>");
+        $( "#linkeddijagnosisdiv" ).append("<input id='selecteddiagnosis"+ui.item.id+"' name='selecteddiagnosis"+ui.item.id+"' class='element checkbox' type='checkbox' value='1' checked  onchange=\"removediagnosis(\'"+ui.item.id + "\');\" /><label id='selecteddiagnosislabel"+ui.item.id+"' class='choice' for='selecteddiagnosis"+ui.item.id+"'>"+ui.item.value +"</label>");
         
         //$( "#linkeddijagnosisdiv" ).append("<option value="+ui.item.id+"' name='selecteddiagnosis"+ui.item.id+">"+ui.item.value +"</option>");
         
         var str = $( "#dijagnozihidden" ).val();
-        str = str + ui.item.id + "|" +ui.item.value + ",";
+        /*str = str + ui.item.id + "|" +ui.item.value + "%%";*/
+        str = str + ui.item.id + "%%";
+        
         $( "#dijagnozihidden" ).val(str);
         $( "#dijagnoza" ).val("");
         
-        alert(str);
+        
+        
+        
+        
         
         return false;
         
@@ -651,6 +738,8 @@ $(function() {
   });
   
   
+  
+//kombiniraniprechkihidden
 
 if( $('#vidnappop').val() != '8' ){
 	$('#kombiniranvid').hide();
@@ -662,6 +751,7 @@ $('#vidnappop').change(function() {
 		
 	}else{
 		$('#kombiniranvid').hide();
+		$( "#kombiniraniprechkihidden" ).val("");
 	}
 });
 
@@ -676,6 +766,31 @@ $('#nacionalnost').change(function() {
 	}else{
 		$('#druganacionalnostdiv').hide();
 	}
+});
+
+
+$('#emb').change(function(){
+	
+	var emb =$('#emb').val(); 
+	
+	var jqxhr = $.ajax( "/validate?emb=" +emb )
+	  .done(function(data,textStatus, jqXHR ) {
+	    if(data == 'found'){
+	    	$( "#dialog-modal" ).dialog({
+	    	    height: 140,
+	    	    modal: true
+	    	  });
+
+	    	
+	    }
+	  })
+	  .fail(function() {
+	    //alert( "error" );
+	  })
+	  .always(function() {
+	    //alert( "complete" );
+	  });
+	
 });
 
 

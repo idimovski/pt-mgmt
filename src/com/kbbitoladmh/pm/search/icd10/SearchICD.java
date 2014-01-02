@@ -38,18 +38,20 @@ public class SearchICD extends HttpServlet {
 			
 			
 //			FileReader fr = new FileReader("files/ICD10.csv");
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("files/ICD10.csv"), "UTF8"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("files/ICD10_2.csv"), "UTF8"));
 			String stringRead = br.readLine();
 
 			
 			while (stringRead != null) {
 				j++;
 				
-				StringTokenizer st = new StringTokenizer(stringRead, ",");
+				StringTokenizer st = new StringTokenizer(stringRead, "%|");
+				String id = "";
 				String code = "";
 				String subcode = "";
 				String desc = "";
 				
+				if(st.hasMoreTokens()) id = st.nextToken().trim().replaceAll("\"", "");
 				if(st.hasMoreTokens()) code = st.nextToken().trim().replaceAll("\"", "");
 				if(st.hasMoreTokens()) subcode = st.nextToken().trim().replaceAll("\"", "");
 				if(st.hasMoreTokens()) desc = st.nextToken().trim().replaceAll("\"", "");
@@ -74,7 +76,7 @@ public class SearchICD extends HttpServlet {
 					matchfound = true;
 				
 				if(matchfound)
-					datalist.add(new ICD10(code, subcode, desc));
+					datalist.add(new ICD10(id, code, subcode, desc));
 				
 				
 					
@@ -111,7 +113,7 @@ public class SearchICD extends HttpServlet {
 		for (int i = 0; i < max; i++) {
 			ICD10 icd = datalist.get(i);
 			icd.setDesc(icd.getDesc().replaceAll("\"", "").trim());
-			retStr +=  "{\"id\":\""+ icd.getCode()+ "-" +icd.getSubCode() +"\", \"value\": \"" + icd.getCode() + " " + icd.getSubCode()+ " " + icd.getDesc() +"\"}";
+			retStr +=  "{\"id\":\""+ icd.getId() +"\", \"value\": \"" + icd.getCode() + " " + icd.getSubCode()+ " " + icd.getDesc() +"\"}";
 			if(i+1 < max)
 				retStr+=",";
 			
