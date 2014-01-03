@@ -1,7 +1,10 @@
+<%@page import="java.util.TimeZone"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.StringTokenizer"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Date"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
@@ -21,8 +24,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/view.css" media="all">
 <link href="css/style.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="css/jquery-ui.css" />
-
+<link rel="stylesheet" href="css/jquery-ui.css" />
 <script type="text/javascript" src="JS/view.js"></script>
 <script type="text/javascript" src="JS/calendar.js"></script>
 <script src="JS/jquery-1.10.2.min.js"></script>
@@ -90,6 +92,8 @@ String dijagnozi = "";
 List dijagnoziHash = new ArrayList();
 List dijagnoziIdList = new ArrayList();
 
+String lastupdate = "";
+
 
 
 String merki = "";String podatocizamerki = "";String promeni = "";String zabeleshki = "";
@@ -146,8 +150,19 @@ ArrayList stepenNaPopList = new ArrayList();
 		promeni = (String) e.getProperty("promeni"); if (null == promeni) promeni = "";
 		zabeleshki = (String) e.getProperty("zabeleshki"); if (null == zabeleshki) zabeleshki = "";
 		
+		try{
+			lastupdate = (String) e.getProperty("lastupdatedby");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy - HH:mm");
+			sdf.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+			lastupdate = lastupdate + " - " + sdf.format(((Date) e.getProperty("lastupdateon")));
+		}catch(Exception ex){
+			lastupdate = "N/A";
+		}
+		
 		if(null != e.getProperty("dijagnoziHash"))	dijagnoziHash = (List) e.getProperty("dijagnoziHash");
 		if(null != e.getProperty("dijagnoziIdList"))	dijagnoziIdList = (List)  e.getProperty("dijagnoziIdList");
+		
+		
 		
 		
 		
@@ -467,7 +482,7 @@ ArrayList stepenNaPopList = new ArrayList();
 									<option value="5" <%if(vidnappop.equals("5")){ %>selected="selected"<%} %>>Пречки во слухот</option>
 									<option value="6" <%if(vidnappop.equals("6")){ %>selected="selected"<%} %>>Пречки во говорот, гласот и јазикот</option>
 									<option value="7" <%if(vidnappop.equals("7")){ %>selected="selected"<%} %>>Аутизам</option>
-									<option value="8" <%if(vidnappop.equals("8")){ %>selected="selected"<%} %>>Комбинирани пречки (можат да бидат сите претходни комбинации)</option>
+									<option value="8" <%if(vidnappop.equals("8")){ %>selected="selected"<%} %>>Комбинирани пречки</option>
 								
 									</select>
 									 
@@ -603,6 +618,16 @@ ArrayList stepenNaPopList = new ArrayList();
 										<textarea id="zabeleshki" name="zabeleshki"
 											class="element textarea large"><%=zabeleshki %></textarea>
 									</div></li>
+									
+								<li id="li_6"><label class="description" for="poslednapromena">Последна промена:</label>
+									<div>
+										<input id="poslednapromena" name="poslednapromena"
+											class="element text large" type="text"  disabled maxlength="255"
+											value="<%= lastupdate%>" />
+									</div>
+								</li>
+									
+								
 
 								<li class="buttons"><input type="hidden" name="form_id"
 									value="740480" /> <input id="saveForm" class="button_text"
@@ -626,12 +651,7 @@ ArrayList stepenNaPopList = new ArrayList();
 					
 					
 					
-					<!--In partnership with-->
-					<a href="http://www.casinotemplates.net"> <img
-						src="images/footnote.gif" class="copyright"
-						alt="casinotemplates.net">
-					</a>
-					<!--DO NOT Remove The Footer Links-->
+					<jsp:include page="footer.jsp" />
 				</div>
 			</div>
 		</div>

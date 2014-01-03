@@ -52,7 +52,7 @@ public class Login extends HttpServlet {
 				req.getSession().setAttribute("userin", true);
 				req.getSession().setAttribute("username", loginuser.getProperty("username"));
 				
-				resp.sendRedirect("padd.jsp");
+				resp.sendRedirect("psearch.jsp");
 				
 				
 			}else{

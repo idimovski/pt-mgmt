@@ -37,6 +37,7 @@
 								<li><a href="login">Најави се</a></li>
 								<li><a href="add">Нов Пациент</a></li>
 								<li><a href="search">Пребарај Пациент</a></li>
+								<li><a href="reports">Извештаи</a></li>
 								<!--  <li><a href="#">Детали за Пациент</a></li>-->
 								<li><a href="logout">Одјави се</a></li>
 							</ul>

@@ -2,6 +2,7 @@ package com.kbbitoladmh.pm;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -108,10 +109,11 @@ public class Patientadd extends HttpServlet {
 		String promeni = req.getParameter("promeni");
 		String zabeleshki = req.getParameter("zabeleshki");
 
+		String username = (String) req.getSession().getAttribute("username");
 		
 		Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
 				pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
-				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop);
+				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop, username);
 			
 		
 		req.setAttribute("pte", patient);
@@ -194,7 +196,7 @@ public class Patientadd extends HttpServlet {
 	private Entity createPatientEntity(String first, String last, String pol, String dobden, String dobmesec, String dobgodina, String mesto, String emb, String nacionalnost, String druganacionalnost, 
 			String pacientulica, String pacientgrad, String pacientopshtina, String pacientkod, String pacientdrzava, String imenatatkoto, String imenamajkata, String mominskamajka, String roditelulica, 
 			String roditelgrad, String roditelopshtina, String roditelkod, String roditeldrzava, String baodbroj, String naodden, String naodmesec, String naodgodina, String vidnappop, Text dijagnozi, 
-			String merki, String podatocizamerki, String zabeleshki, String redenbr, String promeni, String kombiniranVid, String stepenNaPop) {
+			String merki, String podatocizamerki, String zabeleshki, String redenbr, String promeni, String kombiniranVid, String stepenNaPop, String username) {
 		
 		Entity patient = new Entity("Patient",emb);
 		
@@ -271,6 +273,8 @@ public class Patientadd extends HttpServlet {
 		patient.setProperty("podatocizamerki", podatocizamerki);
 		patient.setProperty("promeni", promeni);
 		patient.setProperty("zabeleshki", zabeleshki);
+		patient.setProperty("lastupdatedby", username);
+		patient.setProperty("lastupdateon", new Date());
 		
 		
 		return patient;

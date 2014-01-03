@@ -50,7 +50,7 @@ if(null == session.getAttribute("userin")){
 					<p>&nbsp;</p>
 
 
-					<img id="top" src="images/top.png" alt="">
+					
 					<div id="form_container">
 
 						<form id="form_740480" class="appnitro" method="post" action="search">
@@ -119,14 +119,14 @@ if(null == session.getAttribute("userin")){
 							<span style="width=100%">
 								
 <!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("redenbr") %>' disabled/> -->
-								<label class="description" for="element_1"><%=entity.getProperty("redenbr") %></label>
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("redenbr") %></a></label>
 							</span>
 							</td>
 							<td width="100px">
 							<span style="width=100%">
 								
 <!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
-								<label class="description" for="element_1"><%=entity.getProperty("emb") %></label>
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("emb") %></a></label>
 							</span>
 							</td>
 							<td>
@@ -166,31 +166,7 @@ if(null == session.getAttribute("userin")){
 					<img id="bottom" src="images/bottom.png" alt="">
 
 					<div class="bottom">
-						<ul>
-							<li style="border-left: medium none;"><a href="index.html">Home</a></li>
-							<li><a href="#">About&nbsp;Us</a></li>
-							<li><a href="#">What's&nbsp;New</a></li>
-							<li><a href="#">Services</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Resources</a></li>
-							<li><a href="#">Links</a></li>
-						</ul>
-						<!--DO NOT Remove The Footer Links-->
-						<p>
-							&copy; Copyright 2010. Designed by <a target="_blank"
-								href="http://www.htmltemplates.net">htmltemplates.net</a>
-						</p>
-						<!--Designed by-->
-						<a href="http://www.htmltemplates.net"> <img
-							src="images/footnote.gif" class="copyright" alt="html templates">
-						</a>
-					</div>
-					<!--In partnership with-->
-					<a href="http://www.casinotemplates.net"> <img
-						src="images/footnote.gif" class="copyright"
-						alt="casinotemplates.net">
-					</a>
-					<!--DO NOT Remove The Footer Links-->
+						<jsp:include page="footer.jsp" />
 				</div>
 			</div>
 		</div>
