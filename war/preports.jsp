@@ -242,7 +242,7 @@ ArrayList stepenNaPopList = new ArrayList();
 									
 									
 									<span>
-									<input id="spp_1" name="spp_1" class="element checkbox" <% if (stepenNaPopList.contains("1")){ %> checked <% }%>  type="checkbox" value="all"  onchange="setKPValue(this,'stepen')" /><label class="choice" for="spp_1">Сите</label>
+									<input id="spp_0" name="spp_0" class="element checkbox" <% if (stepenNaPopList.contains("all")){ %> checked <% }%>  type="checkbox" value="all"  onchange="setKPValue(this,'stepen')" /><label class="choice" for="spp_0">Сите</label>
 									<input id="spp_1" name="spp_1" class="element checkbox" <% if (stepenNaPopList.contains("1")){ %> checked <% }%>  type="checkbox" value="1"  onchange="setKPValue(this,'stepen')" /><label class="choice" for="spp_1">Лесна мантална ретардација</label>
 									<input id="spp_2" name="spp_2" class="element checkbox" <% if (stepenNaPopList.contains("2")){ %> checked <% }%>  type="checkbox" value="2" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_2">Умерена ментална ретардација</label>
 									<input id="spp_3" name="spp_3" class="element checkbox" <% if (stepenNaPopList.contains("3")){ %> checked <% }%>  type="checkbox" value="3" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_3">Тешка ментална ретардација</label>

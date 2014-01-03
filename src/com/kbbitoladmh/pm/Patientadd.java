@@ -111,13 +111,6 @@ public class Patientadd extends HttpServlet {
 
 		String username = (String) req.getSession().getAttribute("username");
 		
-		Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
-				pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
-				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop, username);
-			
-		
-		req.setAttribute("pte", patient);
-
 		
 		if(emb.length()==0){
 			mh.addMessage(req, "emb is required");allRequiredPassed = false;
@@ -135,6 +128,16 @@ public class Patientadd extends HttpServlet {
 			 d.forward(req, resp);
 		   return;   
 		 }		
+		
+		Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
+				pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
+				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop, username);
+			
+		
+		req.setAttribute("pte", patient);
+
+		
+		
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		
@@ -201,10 +204,10 @@ public class Patientadd extends HttpServlet {
 		Entity patient = new Entity("Patient",emb);
 		
 		patient.setProperty("redenbr", redenbr);
-		patient.setProperty("ime", first);
-		patient.setProperty("imeCL", first.toLowerCase());
-		patient.setProperty("prezime", last);
-		patient.setProperty("prezimeCL", last.toLowerCase());
+		patient.setProperty("ime", first.trim());
+		patient.setProperty("imeCL", first.trim().toLowerCase());
+		patient.setProperty("prezime", last.trim());
+		patient.setProperty("prezimeCL", last.trim().toLowerCase());
 		patient.setProperty("pol", pol);
 		
 		patient.setProperty("dobden", dobden);
@@ -215,28 +218,28 @@ public class Patientadd extends HttpServlet {
 			patient.setProperty("dobdate", dobgodina+dobmesec+dobden);
 		
 
-		patient.setProperty("mesto", mesto);
-		patient.setProperty("emb", emb);
+		patient.setProperty("mesto", mesto.trim());
+		patient.setProperty("emb", emb.trim());
 		patient.setProperty("nacionalnost", nacionalnost);
 		patient.setProperty("druganacionalnost", druganacionalnost);
 		
-		patient.setProperty("pacientulica", pacientulica);
-		patient.setProperty("pacientgrad", pacientgrad);
-		patient.setProperty("pacientopshtina", pacientopshtina);
-		patient.setProperty("pacientkod", pacientkod);
+		patient.setProperty("pacientulica", pacientulica.trim());
+		patient.setProperty("pacientgrad", pacientgrad.trim());
+		patient.setProperty("pacientopshtina", pacientopshtina.trim());
+		patient.setProperty("pacientkod", pacientkod.trim());
 		patient.setProperty("pacientdrzava", pacientdrzava);
 		
-		patient.setProperty("imenatatkoto", imenatatkoto);
-		patient.setProperty("imenamajkata", imenamajkata);
-		patient.setProperty("mominskamajka", mominskamajka);
+		patient.setProperty("imenatatkoto", imenatatkoto.trim());
+		patient.setProperty("imenamajkata", imenamajkata.trim());
+		patient.setProperty("mominskamajka", mominskamajka.trim());
 		
-		patient.setProperty("roditelulica", roditelulica);
-		patient.setProperty("roditelgrad", roditelgrad);
-		patient.setProperty("roditelopshtina", roditelopshtina);
-		patient.setProperty("roditelkod", roditelkod);
+		patient.setProperty("roditelulica", roditelulica.trim());
+		patient.setProperty("roditelgrad", roditelgrad.trim());
+		patient.setProperty("roditelopshtina", roditelopshtina.trim());
+		patient.setProperty("roditelkod", roditelkod.trim());
 		patient.setProperty("roditeldrzava", roditeldrzava);
 		
-		patient.setProperty("baodbroj", baodbroj);
+		patient.setProperty("baodbroj", baodbroj.trim());
 		patient.setProperty("naodden", naodden);
 		patient.setProperty("naodmesec", naodmesec);
 		patient.setProperty("naodgodina", naodgodina);
@@ -247,7 +250,22 @@ public class Patientadd extends HttpServlet {
 		patient.setProperty("vidnappop", vidnappop);
 		patient.setProperty("kombiniranVid", kombiniranVid);
 		
+		List<String> kombvidtoklist = new ArrayList();
+		StringTokenizer kombvidtok = new StringTokenizer(kombiniranVid,",");
+		while (kombvidtok.hasMoreElements()) {
+			String object = (String) kombvidtok.nextElement();
+			kombvidtoklist.add(object);
+		}
+		patient.setProperty("kombiniranVidList", kombvidtoklist);
+		
 		patient.setProperty("stepenNaPop", stepenNaPop);
+		List<String> stepenlist = new ArrayList();
+		StringTokenizer stepentok = new StringTokenizer(stepenNaPop,",");
+		while (stepentok.hasMoreElements()) {
+			String object = (String) stepentok.nextElement();
+			stepenlist.add(object);
+		}
+		patient.setProperty("stepenNaPopList", stepenlist);
 		
 		
 		List<String> dijagnoziHash = new ArrayList();

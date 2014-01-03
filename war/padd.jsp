@@ -619,11 +619,11 @@ ArrayList stepenNaPopList = new ArrayList();
 											class="element textarea large"><%=zabeleshki %></textarea>
 									</div></li>
 									
-								<li id="li_6"><label class="description" for="poslednapromena">Последна промена:</label>
+								<li id="li_6"><!-- <label class="description" for="poslednapromena">Последна промена:</label> -->
 									<div>
-										<input id="poslednapromena" name="poslednapromena"
+										<label id="poslednapromena" name="poslednapromena"
 											class="element text large" type="text"  disabled maxlength="255"
-											value="<%= lastupdate%>" />
+											>Последна промена: <%= lastupdate%> </label>
 									</div>
 								</li>
 									
