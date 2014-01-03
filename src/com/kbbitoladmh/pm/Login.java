@@ -14,6 +14,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.kbbitoladmh.pm.util.MessageHelper;
 
 @SuppressWarnings("serial")
 public class Login extends HttpServlet {
@@ -24,6 +25,8 @@ public class Login extends HttpServlet {
 //		super.doGet(req, resp);
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		MessageHelper mh = new MessageHelper();
 	
 		
 		String username = req.getParameter("username");
@@ -56,12 +59,16 @@ public class Login extends HttpServlet {
 				
 				
 			}else{
+				mh.addMessage(req, "Погрешна Лозинка ! ");
 				System.out.println("Password InCORRECT");
 				resp.sendRedirect("login.jsp");
+				
 			}
 		}else{
+			mh.addMessage(req, "Погрешно Корисничко Име ! ");
 			System.out.println("user NOT found");
 			resp.sendRedirect("login.jsp");
+			
 
 		}
 		

@@ -204,10 +204,17 @@ ArrayList stepenNaPopList = new ArrayList();
 
 						<form id="form_740480" class="appnitro" method="post" action="add">
 							<div class="form_description">
-								<h2>Пациент</h2>
+								<h2>Пациент   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="saveForm" class="button_text"
+									type="submit" name="submit" value="  Зачувај   " />	</h2>
 
 							</div>
 							<ul>
+							
 								<li id="li_1"><label class="description" for="element_1">Реден Број</label>
 									<div>
 										<input id="redenbr" name="redenbr"

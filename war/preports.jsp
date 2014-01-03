@@ -2,12 +2,16 @@
 <%@page import="java.util.StringTokenizer"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Iterator"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page import="com.google.appengine.api.datastore.Entity"%>
 <%@ page import="com.google.appengine.api.datastore.Text"%> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+
+
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -69,7 +73,8 @@ if(null == session.getAttribute("userin")){
 //get entity
 
 Entity e = (Entity) request.getAttribute("ptr");
-String pol = "";String dobden = "";String dobmesec = "";String dobgodina = "";
+String pol = "";String FROMden = "01";String FROMmesec = "01";String FROMgodina = "1900";
+String TOden = "01";String TOmesec = "01";String TOgodina = "2020";
 
 String nacionalnost = "";
 
@@ -82,10 +87,10 @@ ArrayList stepenNaPopList = new ArrayList();
 		
 		
 		
-		dobden = (String) e.getProperty("dobden"); if (null == dobden) dobden = "";
-		dobmesec = (String) e.getProperty("dobmesec"); if (null == dobmesec) dobmesec = "";
-		dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
-		dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
+		//dobden = (String) e.getProperty("dobden"); if (null == dobden) dobden = "";
+		//dobmesec = (String) e.getProperty("dobmesec"); if (null == dobmesec) dobmesec = "";
+		//dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
+		//dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
 		
 		nacionalnost = (String) e.getProperty("nacionalnost"); if (null == nacionalnost) nacionalnost = "";
 	
@@ -120,34 +125,110 @@ ArrayList stepenNaPopList = new ArrayList();
 
 						<form id="form_740480" class="appnitro" method="post" action="reports">
 							<div class="form_description">
-								<h2>Извештаи</h2>
+								<h2>Извештаи  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input id="saveForm" class="button_text" type="submit" name="submit" value="  Изврши   " /></h2>
 
 							</div>
-							<ul>
-								
-								
-<!-- POL -->					<li>
-								<label class="description" for="pol">Пол:</label>
-								<select class="element select medium" id="pol" name="pol">
-											<option value="all" <%if (pol.equals("a")) {%>selected="selected"<%} %>>Сите</option>
-											<option value="m" <%if (pol.equals("m")) {%>selected="selected"<%} %>>Машки</option>
-											<option value="z" <%if (pol.equals("z")) {%>selected="selected"<%} %>>Женски</option>
-										</select> 
-										
-								</li>
 							
+							
+							<ul>
+					
+					<br/>
+						<br/>
+					<%
+					if(null!=request.getAttribute("allpts")){
+						List<Entity> allpts = (List) request.getAttribute("allpts");
+						
+						%><label class="description" for="element_1">Пациенти:</label>
+					
+						
+						<li>
+						
+					
+						</li>
+						
+						<table border="0" width="100%">
+						<tr>
+						<td>Реден Број</td>
+						<td>ЕМБ</td>
+						<td>Име</td>
+						<td>Презиме</td>
+						</tr>
+						<%
+								
+						boolean firstrow = true;
+						for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
+							Entity entity = (Entity) iterator.next();
+							%>
+							<li id="li_1" >
+							<tr>
+							<td width="100px">
+							<span style="width=100%">
+								
+<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("redenbr") %>' disabled/> -->
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("redenbr") %></a></label>
+							</span>
+							</td>
+							<td width="100px">
+							<span style="width=100%">
+								
+<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("emb") %></a></label>
+							</span>
+							</td>
+							<td>
+							<span>
+								
+								
+<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
+								<label class="description" for="element_1"><%=entity.getProperty("ime") %></label>
+							</span>
+							</td>
+							<td>
+							<span>
+								
+								<!-- <input id="element_1_2" name= "element_1_2" class="element text" maxlength="255" size="14" value='<%=entity.getProperty("last") %>' disabled/> -->
+								<label class="description" for="element_1"><%=entity.getProperty("prezime") %></label>
+								
+							</span> 
+							</li>
+							</td>
+							
+							<td><a href="details?ptid=<%=entity.getProperty("emb")%>">Детали</a></td>
+							</tr>
+							
+							<%
+							firstrow = false;
+						}
+					}
+					%>
+					</table>
+					</ul>
+							<ul>
+							
+							<li class="section_break">
+									<h3></h3>
+									<p></p>
+								</li>
+								
+								
+								
+
 <!-- Datum OD -->					<li id="li_1" >
-									<label class="description" for="dob_1">Датум на раѓање Од:</label>
+									<label class="description" for="dob_1">Датум на раѓање Од: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; До:</label>
+									 
 									<span>
-										<input id="dob_1_1" name="dob_1_1" class="element text" size="2" maxlength="2" value="<%=dobden %>" type="text"> /
+										<input id="dob_1_1" name="dob_1_1" class="element text" size="2" maxlength="2" value="<%=FROMden %>" type="text"> /
 										<label for="dob_1_1">Ден</label>
 									</span>
 									<span>
-										<input id="dob_1_2" name="dob_1_2" class="element text" size="2" maxlength="2" value="<%=dobmesec %>" type="text"> /
+										<input id="dob_1_2" name="dob_1_2" class="element text" size="2" maxlength="2" value="<%=FROMmesec%>" type="text"> /
 										<label for="dob_1_2">Месец</label>
 									</span>
 									<span>
-								 		<input id="dob_1_3" name="dob_1_3" class="element text" size="4" maxlength="4" value="<%=dobgodina %>" type="text">
+								 		<input id="dob_1_3" name="dob_1_3" class="element text" size="4" maxlength="4" value="<%=FROMgodina %>" type="text">
 										<label for="dob_1_3">Година</label>
 									</span>
 								
@@ -164,21 +245,21 @@ ArrayList stepenNaPopList = new ArrayList();
 										onSelect	 : selectEuropeDate
 										});
 									</script>
-									<p class="guidelines" id="guide_1"><small>Датум на раѓање Од:</small></p> 
-								</li>
 								
-<!-- Datum OD -->				<li id="li_1" >
-								<label class="description" for="dodob">Датум на раѓање До:</label>
+<!-- Datum OD -->				
+									
+								
 									<span>
-										<input id="dodob_1_1" name="dodob_1_1" class="element text" size="2" maxlength="2" value="<%=dobden %>" type="text"> /
+									
+										<input id="dodob_1_1" name="dodob_1_1" class="element text" size="2" maxlength="2" value="<%=TOden %>" type="text"> /
 										<label for="dodob_1_1">Ден</label>
 									</span>
 									<span>
-										<input id="dodob_1_2" name="dodob_1_2" class="element text" size="2" maxlength="2" value="<%=dobmesec %>" type="text"> /
+										<input id="dodob_1_2" name="dodob_1_2" class="element text" size="2" maxlength="2" value="<%=TOmesec%>" type="text"> /
 										<label for="dodob_1_2">Месец</label>
 									</span>
 									<span>
-								 		<input id="dodob_1_3" name="dodob_1_3" class="element text" size="4" maxlength="4" value="<%=dobgodina %>" type="text">
+								 		<input id="dodob_1_3" name="dodob_1_3" class="element text" size="4" maxlength="4" value="<%=TOgodina %>" type="text">
 										<label for="dodob_1_3">Година</label>
 									</span>
 								
@@ -198,15 +279,16 @@ ArrayList stepenNaPopList = new ArrayList();
 									<p class="guidelines" id="guide_1"><small>Датум на раѓање До:</small></p> 
 								</li>
 								
-<!-- Nacionalnost -->								<li>
-								<label class="description" for="nacionalnost">Националност</label>
+<!-- Nacionalnost -->			<li>
+								<span style="width:50%">
+								<label class="description" for="nacionalnost">Националност:</label>
 								<select class="element select medium" id="nacionalnost"
 											name="nacionalnost">
-											<option value="m" <%if(nacionalnost.equals("all")){ %>selected="selected"<%} %> ><b>Сите</b></option>
+											<option value="all" <%if(nacionalnost.equals("all")){ %>selected="selected"<%} %> ><b>Сите</b></option>
 											<option value="m" <%if(nacionalnost.equals("m")){ %>selected="selected"<%} %> >Македонец/ка</option>
 											<option value="a" <%if(nacionalnost.equals("a")){ %>selected="selected"<%} %>  >Албанец/ка</option>
 											<option value="r" <%if(nacionalnost.equals("r")){ %>selected="selected"<%} %> >Ром/ка</option>
-											<option value="t"  <%if(nacionalnost.equals("t")){ %>selected="selected"<%} %>>Турчин/ка</option>
+											<option value="t" <%if(nacionalnost.equals("t")){ %>selected="selected"<%} %>>Турчин/ка</option>
 											<option value="s" <%if(nacionalnost.equals("s")){ %>selected="selected"<%} %> >Србин/ка</option>
 											<option value="v" <%if(nacionalnost.equals("v")){ %>selected="selected"<%} %> >Влав</option>
 											<option value="e" <%if(nacionalnost.equals("e")){ %>selected="selected"<%} %> >Египјанин/ка</option>
@@ -216,7 +298,19 @@ ArrayList stepenNaPopList = new ArrayList();
 											
 										</select> 
 										
+<!-- POL -->					</span>
+								<span style="width:200px">
+								<label class="description" for="pol">Пол:</label>
+								<select class="element select medium" id="pol" name="pol">
+											<option value="all" <%if (pol.equals("a")) {%>selected="selected"<%} %>>Сите</option>
+											<option value="m" <%if (pol.equals("m")) {%>selected="selected"<%} %>>Машки</option>
+											<option value="z" <%if (pol.equals("z")) {%>selected="selected"<%} %>>Женски</option>
+										</select> 
+								</span>	
 								</li>
+							
+										
+								
 																
 <!-- Vid na poprechenost -->	<li id="vidnappopli" >
 									<label class="description" for="vidnappop">Вид на попреченост:</label>
@@ -277,6 +371,9 @@ ArrayList stepenNaPopList = new ArrayList();
 									type="submit" name="submit" value="  Изврши   " /></li>
 									
 							</ul>
+							
+							
+								
 							
 						</form>
 						<div id="footer">

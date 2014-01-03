@@ -113,13 +113,13 @@ public class Patientadd extends HttpServlet {
 		
 		
 		if(emb.length()==0){
-			mh.addMessage(req, "emb is required");allRequiredPassed = false;
+			mh.addMessage(req, "Потребен е ЕМБГ ! ");allRequiredPassed = false;
 		}
 		if(last.length()==0){
-			mh.addMessage(req, "firstname is required");allRequiredPassed = false;
+			mh.addMessage(req, "Потребно е Име ! ");allRequiredPassed = false;
 		}
 		if(first.length()==0){
-			mh.addMessage(req, "lastname is required");allRequiredPassed = false;
+			mh.addMessage(req, "Потребно е Презиме ! ");allRequiredPassed = false;
 		}
 			
 		

@@ -1,6 +1,7 @@
 package com.kbbitoladmh.pm;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class Patientreports extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("do reports called");
 		
-		MessageHelper mh = new MessageHelper();
+//		MessageHelper mh = new MessageHelper();
 		boolean allRequiredPassed = true;
 		
 		String pol = req.getParameter("pol");
@@ -64,14 +65,18 @@ public class Patientreports extends HttpServlet {
 		String oddobmesec = req.getParameter("dob_1_2");
 		String oddobgodina = req.getParameter("dob_1_3");
 		
+		String FROMdate = oddobgodina+oddobmesec+oddobden;
+		
 		String dodobden = req.getParameter("dodob_1_1");
 		String dodobmesec = req.getParameter("dodob_1_2");
 		String dodobgodina = req.getParameter("dodob_1_3");
 		
+		String TOdate = dodobgodina+dodobmesec+dodobden;
+
 		String nacionalnost = req.getParameter("nacionalnost");
 		String vidnappop = req.getParameter("vidnappop");
 		
-//		String stepen = req.getParameter("stepenhidden");
+		String stepen = req.getParameter("stepenhidden");
 
 	
 		
@@ -79,12 +84,12 @@ public class Patientreports extends HttpServlet {
 
 		
 		
-		Query allptsquesry  = new Query("Patient").addSort("ime", SortDirection.ASCENDING);
+		Query allptsquesry  = new Query("Patient");//.addSort("ime", SortDirection.ASCENDING);
 		
-//		if(!("".equals(first))) allptsquesry.addFilter("imeCL",FilterOperator.EQUAL,first.toLowerCase());
-//		if(!("".equals(last))) allptsquesry.addFilter("prezimeCL",FilterOperator.EQUAL,last.toLowerCase());
-//		if(!("".equals(emb))) allptsquesry.addFilter("emb",FilterOperator.EQUAL,emb);
-//		if(!("".equals(redenbroj))) allptsquesry.addFilter("redenbr",FilterOperator.EQUAL,redenbroj);
+		if(!("all".equals(pol))) allptsquesry.addFilter("pol",FilterOperator.EQUAL,pol.toLowerCase());
+		if(!("all".equals(nacionalnost))) allptsquesry.addFilter("nacionalnost",FilterOperator.EQUAL,nacionalnost.toLowerCase());
+		if(!("".equals(FROMdate))) allptsquesry.addFilter("dobdate",FilterOperator.GREATER_THAN_OR_EQUAL,FROMdate);
+		if(!("".equals(TOdate))) allptsquesry.addFilter("dobdate",FilterOperator.LESS_THAN_OR_EQUAL,TOdate);
 		
 		
 		
@@ -92,10 +97,43 @@ public class Patientreports extends HttpServlet {
 		
 		
 		
-		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(100));
+		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(1000));
+		
+		List<Entity> returnList = new ArrayList<>();
+		
+		for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
+			Entity entity = (Entity) iterator.next();
+			
+			boolean vidmatched = false;
+			boolean stepenmatched = false;
+			
+			if(!("all".equals(vidnappop))){
+				if(vidnappop.equals(entity.getProperty("vidnapop"))){
+					vidmatched = true;
+				}
+			}else{
+				// vid not specified
+				vidmatched = true;
+			}
+			
+			
+			if(!("all".equals(stepen))){
+				stepenmatched = true;
+				
+			}else{
+				//stepen not specified
+				stepenmatched = true;
+			}
+			
+			
+			if(vidmatched && stepenmatched)
+				returnList.add(entity);
+			
+			
+		}
 		
 		
-		req.setAttribute("allpts", allpts);
+		req.setAttribute("allpts", returnList);
 		
 	
 		RequestDispatcher d = getServletContext().getRequestDispatcher("/preports.jsp");

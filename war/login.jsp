@@ -46,12 +46,12 @@
 									<table>
 										<tr>
 											<td>Име:</td>
-											<td><input name="username" type="text" value="" /></td>
+											<td><input name="username" type="text" value="admin" /></td>
 										</tr>
 										<tr>
 											<td>Лозинка:</td>
 											<td><input name="password" type="password"
-												value="" /></td>
+												value="adminp" /></td>
 										</tr>
 									</table>
 									<div>

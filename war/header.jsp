@@ -2,7 +2,7 @@
 					<div class="header">
 						<div class="header-top">
 							<h1>
-								Your <span>Logo</span>
+								 <span></span>
 							</h1>
 							<p>
 								<%
@@ -11,14 +11,15 @@
 								%>
 								Здраво !  &nbsp;
 								<%=session.getAttribute("username")%>
+								
 								<%
 									}
 									} else {
-								%>Најавете се !
+								%><font color="Red">Најавете се !</font>
 								<%
 									}
 								%>
-								<br>
+								<br><font color="Red">
 								<%
 									if (null != session.getAttribute("msg")) {
 								%>
@@ -29,7 +30,7 @@
 								<%
 									}
 								%>
-							
+								</font>
 							</p>
 						</div>
 						<div class="topmenu">
