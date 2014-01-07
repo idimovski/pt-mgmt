@@ -145,10 +145,10 @@ ArrayList stepenNaPopList = new ArrayList();
 		stepenNaPop = (String) e.getProperty("stepenNaPop"); if (null == stepenNaPop) stepenNaPop = "";
 		
 		dijagnozi = ((Text) e.getProperty("dijagnozi")).getValue(); if (null == dijagnozi) dijagnozi = "";
-		merki = (String) e.getProperty("merki"); if (null == merki) merki = "";
-		podatocizamerki = (String) e.getProperty("podatocizamerki"); if (null == podatocizamerki) podatocizamerki = "";
-		promeni = (String) e.getProperty("promeni"); if (null == promeni) promeni = "";
-		zabeleshki = (String) e.getProperty("zabeleshki"); if (null == zabeleshki) zabeleshki = "";
+		merki = ((Text) e.getProperty("merki")).getValue(); if (null == merki) merki = "";
+		podatocizamerki = ((Text) e.getProperty("podatocizamerki")).getValue(); if (null == podatocizamerki) podatocizamerki = "";
+		promeni = ((Text) e.getProperty("promeni")).getValue(); if (null == promeni) promeni = "";
+		zabeleshki = ((Text) e.getProperty("zabeleshki")).getValue(); if (null == zabeleshki) zabeleshki = "";
 		
 		try{
 			lastupdate = (String) e.getProperty("lastupdatedby");
@@ -191,7 +191,7 @@ ArrayList stepenNaPopList = new ArrayList();
 
 	<div class="main-out">
 		<div class="main">
-			<div class="page">
+			<div class="">
 				<div class="top">
 					<jsp:include page="header.jsp" />
 
@@ -222,7 +222,7 @@ ArrayList stepenNaPopList = new ArrayList();
 											value='<%=redenbr%>' />
 									</div>
 									<p class="guidelines" id="guide_2">
-										<small>Име</small>
+										<small>Реден Број</small>
 									</p>
 								</li>
 
@@ -662,9 +662,7 @@ ArrayList stepenNaPopList = new ArrayList();
 				</div>
 			</div>
 		</div>
-<script type="text/javascript">
-
-var listOfDijagnisisJS = 
+<script type="text/javascript"> 
 
 $("#saveForm").click(function() {
 	var completeStr = "";

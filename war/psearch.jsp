@@ -43,7 +43,7 @@ if(null == session.getAttribute("userin")){
 <body>
 	<div class="main-out">
 		<div class="main">
-			<div class="page">
+			<div class="">
 				<div class="top">
 					<jsp:include page="header.jsp" />
 
@@ -113,7 +113,6 @@ if(null == session.getAttribute("userin")){
 						for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
 							Entity entity = (Entity) iterator.next();
 							%>
-							<li id="li_1" >
 							<tr>
 							<td width="100px">
 							<span style="width=100%">

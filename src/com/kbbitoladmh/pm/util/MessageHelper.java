@@ -5,7 +5,24 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MessageHelper {
 	
-	public  void addMessage(HttpServletRequest req, String s){
+public  void addGooDMessage(HttpServletRequest req, String s){
+		
+		
+		String msg = (String) req.getSession().getAttribute("msgG");
+		System.out.println(msg);
+		if(null !=msg){
+			req.getSession().setAttribute("msgG", msg + " | " + s);
+		}else{
+			req.getSession().setAttribute("msgG",s);
+		}
+		
+		System.out.println(req.getSession().getAttribute("msgG"));
+		
+		
+		
+	}
+	
+	public  void addErrorMessage(HttpServletRequest req, String s){
 		
 		
 		String msg = (String) req.getSession().getAttribute("msg");

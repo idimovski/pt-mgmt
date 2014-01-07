@@ -9,9 +9,10 @@
 									if (null != session.getAttribute("userin")) {
 										if (session.getAttribute("userin").equals(true)) {
 								%>
-								Здраво !  &nbsp;
+								Здраво&nbsp;
 								<%=session.getAttribute("username")%>
-								
+								 !
+								 
 								<%
 									}
 									} else {
@@ -26,6 +27,18 @@
 								<%=session.getAttribute("msg")%>
 								<%
 									session.removeAttribute("msg");
+								%>
+								<%
+									}
+								%>
+								</font>
+								<font color="green">
+								<%
+									if (null != session.getAttribute("msgG")) {
+								%>
+								<%=session.getAttribute("msgG")%>
+								<%
+									session.removeAttribute("msgG");
 								%>
 								<%
 									}

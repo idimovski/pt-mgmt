@@ -59,13 +59,13 @@ public class Login extends HttpServlet {
 				
 				
 			}else{
-				mh.addMessage(req, "Погрешна Лозинка ! ");
+				mh.addErrorMessage(req, "Погрешна Лозинка ! ");
 				System.out.println("Password InCORRECT");
 				resp.sendRedirect("login.jsp");
 				
 			}
 		}else{
-			mh.addMessage(req, "Погрешно Корисничко Име ! ");
+			mh.addErrorMessage(req, "Погрешно Корисничко Име ! ");
 			System.out.println("user NOT found");
 			resp.sendRedirect("login.jsp");
 			

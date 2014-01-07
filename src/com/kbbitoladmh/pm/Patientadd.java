@@ -104,87 +104,59 @@ public class Patientadd extends HttpServlet {
 		
 		
 		
-		String merki = req.getParameter("merki");
-		String podatocizamerki = req.getParameter("podatocizamerki");
-		String promeni = req.getParameter("promeni");
-		String zabeleshki = req.getParameter("zabeleshki");
+		Text merki = new Text(req.getParameter("merki"));
+		Text podatocizamerki = new Text(req.getParameter("podatocizamerki"));
+		Text promeni = new Text(req.getParameter("promeni"));
+		Text zabeleshki = new Text(req.getParameter("zabeleshki"));
 
 		String username = (String) req.getSession().getAttribute("username");
 		
+		try{
 		
-		if(emb.length()==0){
-			mh.addMessage(req, "Потребен е ЕМБГ ! ");allRequiredPassed = false;
-		}
-		if(last.length()==0){
-			mh.addMessage(req, "Потребно е Име ! ");allRequiredPassed = false;
-		}
-		if(first.length()==0){
-			mh.addMessage(req, "Потребно е Презиме ! ");allRequiredPassed = false;
-		}
+			Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
+					pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
+					roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop, username);
+				
 			
-		
-		 if(allRequiredPassed == false){
-			 RequestDispatcher d = getServletContext().getRequestDispatcher("/padd.jsp");
-			 d.forward(req, resp);
-		   return;   
-		 }		
-		
-		Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
-				pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
-				roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop, username);
+			req.setAttribute("pte", patient);
 			
+			if(emb.length()==0){
+				mh.addErrorMessage(req, "Потребен е ЕМБГ ! ");allRequiredPassed = false;
+			}
+			if(last.length()==0){
+				mh.addErrorMessage(req, "Потребно е Име ! ");allRequiredPassed = false;
+			}
+			if(first.length()==0){
+				mh.addErrorMessage(req, "Потребно е Презиме ! ");allRequiredPassed = false;
+			}
+				
+			
+			 if(allRequiredPassed == false){
+				 RequestDispatcher d = getServletContext().getRequestDispatcher("/padd.jsp");
+				 d.forward(req, resp);
+			   return;   
+			 }		
+			 
 		
-		req.setAttribute("pte", patient);
-
-		
-		
-		
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		
-		Transaction tr = datastore.beginTransaction();
-		
-		datastore.put(tr,patient);
-		
-		tr.commit();
-		
-//		add all
-		
-//		List<Entity> l = new ArrayList<>();
-//		for (int i = 1; i < 100000; i++) {
-//			Entity patient1 = new Entity("Patient", i);
-//			patient.setProperty("first", first);
-//			patient.setProperty("last", last);
-//			patient.setProperty("emb", emb);
-//			patient.setProperty("ptaddress1", ptaddress1);
-//			patient.setProperty("naod", naod);
-//			l.add(patient1);
-//			
-//		}
-//		System.out.println("put start");
-//		datastore.put(l);
-//		System.out.println("put end");
-		
-		
-		
-//		delete all
-//		Query getpatient = new Query("Patient");
-//		List<Entity> allPs = datastore.prepare(getpatient).asList(FetchOptions.Builder.withLimit(100000));
-//		System.out.println(allPs.size());
-//	
-//		List<Key> listKeys = new ArrayList<>();
-//		for (Iterator iterator = allPs.iterator(); iterator.hasNext();) {
-//			Entity entity = (Entity) iterator.next();
-//			
-//			
-//			System.out.println("deleted " + entity.getKey());;
-//			listKeys.add(entity.getKey());
-//			
-//		}
-//		datastore.delete(listKeys);
-//		datastore.getCurrentTransaction().commit();
-		
-		
-		//req.getSession().setAttribute("msg", "Pt stored successfuly with key" + patient.getKey());
+			
+			
+			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			
+			Transaction tr = datastore.beginTransaction();
+			
+			datastore.put(tr,patient);
+			
+			tr.commit();
+			
+			
+			
+			mh.addGooDMessage(req, "Пациентот со ЕМБ "+emb+" беше успешно зачуван !");allRequiredPassed = false;
+//			throw new Exception();
+		 }catch(Exception e){
+			 mh.addErrorMessage(req, "Грешка при зачувување на пациентот !");allRequiredPassed = false;
+		 }
+	
+		 
 
 		
 		RequestDispatcher d = getServletContext().getRequestDispatcher("/padd.jsp");
@@ -199,9 +171,14 @@ public class Patientadd extends HttpServlet {
 	private Entity createPatientEntity(String first, String last, String pol, String dobden, String dobmesec, String dobgodina, String mesto, String emb, String nacionalnost, String druganacionalnost, 
 			String pacientulica, String pacientgrad, String pacientopshtina, String pacientkod, String pacientdrzava, String imenatatkoto, String imenamajkata, String mominskamajka, String roditelulica, 
 			String roditelgrad, String roditelopshtina, String roditelkod, String roditeldrzava, String baodbroj, String naodden, String naodmesec, String naodgodina, String vidnappop, Text dijagnozi, 
-			String merki, String podatocizamerki, String zabeleshki, String redenbr, String promeni, String kombiniranVid, String stepenNaPop, String username) {
+			Text merki, Text podatocizamerki, Text zabeleshki, String redenbr, Text promeni, String kombiniranVid, String stepenNaPop, String username) {
 		
-		Entity patient = new Entity("Patient",emb);
+		Entity patient = null;
+		if ("".equals(emb)){
+			patient = new Entity("Patient");
+		}else{
+			patient = new Entity("Patient",emb);
+		}
 		
 		patient.setProperty("redenbr", redenbr);
 		patient.setProperty("ime", first.trim());

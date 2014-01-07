@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -76,9 +77,33 @@ public class Patientreports extends HttpServlet {
 		String nacionalnost = req.getParameter("nacionalnost");
 		String vidnappop = req.getParameter("vidnappop");
 		
-		String stepen = req.getParameter("stepenhidden");
+		String stepen = req.getParameter("stepennapoprecenosthidden");
+		
+		StringTokenizer stepenTokenizer = new StringTokenizer(stepen,",");
+		List stepenList1 = new ArrayList();
+		while (stepenTokenizer.hasMoreElements()) {
+			String st = (String) stepenTokenizer.nextElement();
+			stepenList1.add(st);
+		}
 
-	
+		Entity e = new Entity("Patient");
+		
+		e.setProperty("FROMden", oddobden);
+		e.setProperty("FROMmesec", oddobmesec);
+		e.setProperty("FROMgodina", oddobgodina);
+		e.setProperty("TOden", dodobden);
+		e.setProperty("TOmesec", dodobmesec);
+		e.setProperty("TOgodina", dodobgodina);
+		e.setProperty("nacionalnost", nacionalnost);
+		e.setProperty("vidnappop", vidnappop);
+		e.setProperty("stepenNaPopList", stepenList1);
+		e.setProperty("stepen", stepen);
+		
+		e.setProperty("pol", pol);
+		
+		
+		req.setAttribute("ptr", e);
+		
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -90,6 +115,8 @@ public class Patientreports extends HttpServlet {
 		if(!("all".equals(nacionalnost))) allptsquesry.addFilter("nacionalnost",FilterOperator.EQUAL,nacionalnost.toLowerCase());
 		if(!("".equals(FROMdate))) allptsquesry.addFilter("dobdate",FilterOperator.GREATER_THAN_OR_EQUAL,FROMdate);
 		if(!("".equals(TOdate))) allptsquesry.addFilter("dobdate",FilterOperator.LESS_THAN_OR_EQUAL,TOdate);
+		if(!("all".equals(vidnappop))) allptsquesry.addFilter("vidnappop",FilterOperator.EQUAL,vidnappop);
+		
 		
 		
 		
@@ -97,38 +124,47 @@ public class Patientreports extends HttpServlet {
 		
 		
 		
-		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(1000));
+		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(10000));
 		
 		List<Entity> returnList = new ArrayList<>();
 		
-		for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
-			Entity entity = (Entity) iterator.next();
-			
-			boolean vidmatched = false;
-			boolean stepenmatched = false;
-			
-			if(!("all".equals(vidnappop))){
-				if(vidnappop.equals(entity.getProperty("vidnapop"))){
-					vidmatched = true;
-				}
-			}else{
-				// vid not specified
-				vidmatched = true;
-			}
-			
-			
-			if(!("all".equals(stepen))){
-				stepenmatched = true;
+		
+		
+		System.out.println(stepen);
+		
+		if(!(stepen.equals(""))){
+			for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
+				Entity entity = (Entity) iterator.next();
+				boolean stepenmatched = false;
 				
-			}else{
-				//stepen not specified
-				stepenmatched = true;
+				if("".equals(stepen))
+					stepenmatched = true;
+				stepenTokenizer = new StringTokenizer(stepen,",");
+				while (stepenTokenizer.hasMoreElements()) {
+					String st = (String) stepenTokenizer.nextElement();
+					if("all".equals(st)){
+						stepenmatched = true;
+						break;
+					}else{
+						List stepenList = (List) entity.getProperty("stepenNaPopList");
+						if(null!= stepenList){
+							if(stepenList.contains(st)){
+								stepenmatched = true;
+								break;
+							}
+						}
+						
+					}
+					
+				}
+				
+				
+				if(stepenmatched)
+					returnList.add(entity);
+				
 			}
-			
-			
-			if(vidmatched && stepenmatched)
-				returnList.add(entity);
-			
+		}else{
+			returnList = allpts;
 			
 		}
 		
@@ -144,4 +180,5 @@ public class Patientreports extends HttpServlet {
 	}
 	
 }
+
 

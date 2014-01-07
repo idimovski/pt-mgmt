@@ -79,7 +79,7 @@ String TOden = "01";String TOmesec = "01";String TOgodina = "2020";
 String nacionalnost = "";
 
 String vidnappop = ""; String stepenNaPop = "";
-ArrayList stepenNaPopList = new ArrayList();
+List stepenNaPopList = new ArrayList();
 
 	if(null != e){
 		
@@ -87,19 +87,23 @@ ArrayList stepenNaPopList = new ArrayList();
 		
 		
 		
-		//dobden = (String) e.getProperty("dobden"); if (null == dobden) dobden = "";
-		//dobmesec = (String) e.getProperty("dobmesec"); if (null == dobmesec) dobmesec = "";
-		//dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
-		//dobgodina = (String) e.getProperty("dobgodina"); if (null == dobgodina) dobgodina = "";
+		FROMden = (String) e.getProperty("FROMden"); if (null == FROMden) FROMden = "";
+		FROMmesec = (String) e.getProperty("FROMmesec"); if (null == FROMmesec) FROMgodina = "";
+		FROMgodina = (String) e.getProperty("FROMgodina"); if (null == FROMgodina) FROMgodina = "";
+		
+		TOmesec = (String) e.getProperty("TOmesec"); if (null == TOmesec) TOmesec = "";
+		TOden = (String) e.getProperty("TOden"); if (null == TOden) TOden = "";
+		TOgodina = (String) e.getProperty("TOgodina"); if (null == TOgodina) TOgodina = "";
 		
 		nacionalnost = (String) e.getProperty("nacionalnost"); if (null == nacionalnost) nacionalnost = "";
 	
 		vidnappop = (String) e.getProperty("vidnappop"); if (null == vidnappop) vidnappop = "";
 		
 		
-		stepenNaPop = (String) e.getProperty("stepenNaPop"); if (null == stepenNaPop) stepenNaPop = "";
+		stepenNaPop = (String) e.getProperty("stepen"); if (null == stepenNaPop) stepenNaPop = "";
 		
 		
+		stepenNaPopList = (List) e.getProperty("stepenNaPopList"); if (null == stepenNaPopList) stepenNaPopList = new ArrayList();
 		
 		
 	}
@@ -112,7 +116,7 @@ ArrayList stepenNaPopList = new ArrayList();
 
 	<div class="main-out">
 		<div class="main">
-			<div class="page">
+			<div class="">
 				<div class="top">
 					<jsp:include page="header.jsp" />
 
@@ -141,16 +145,12 @@ ArrayList stepenNaPopList = new ArrayList();
 					if(null!=request.getAttribute("allpts")){
 						List<Entity> allpts = (List) request.getAttribute("allpts");
 						
-						%><label class="description" for="element_1">Пациенти:</label>
+						%><label class="description" for="element_1">Пациенти (<%=allpts.size() %>):</label>
 					
 						
-						<li>
-						
-					
-						</li>
-						
-						<table border="0" width="100%">
+						<table border="1" style="border-width: 0" width="100%">
 						<tr>
+						<td>#</td>
 						<td>Реден Број</td>
 						<td>ЕМБ</td>
 						<td>Име</td>
@@ -159,11 +159,13 @@ ArrayList stepenNaPopList = new ArrayList();
 						<%
 								
 						boolean firstrow = true;
+						int i = 0;
 						for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
 							Entity entity = (Entity) iterator.next();
+							i++;
 							%>
-							<li id="li_1" >
 							<tr>
+							<td><%=i%></td>
 							<td width="100px">
 							<span style="width=100%">
 								
@@ -276,7 +278,6 @@ ArrayList stepenNaPopList = new ArrayList();
 										onSelect	 : selectEuropeDate
 										});
 									</script>
-									<p class="guidelines" id="guide_1"><small>Датум на раѓање До:</small></p> 
 								</li>
 								
 <!-- Nacionalnost -->			<li>
@@ -336,7 +337,6 @@ ArrayList stepenNaPopList = new ArrayList();
 									
 									
 									<span>
-									<input id="spp_0" name="spp_0" class="element checkbox" <% if (stepenNaPopList.contains("all")){ %> checked <% }%>  type="checkbox" value="all"  onchange="setKPValue(this,'stepen')" /><label class="choice" for="spp_0">Сите</label>
 									<input id="spp_1" name="spp_1" class="element checkbox" <% if (stepenNaPopList.contains("1")){ %> checked <% }%>  type="checkbox" value="1"  onchange="setKPValue(this,'stepen')" /><label class="choice" for="spp_1">Лесна мантална ретардација</label>
 									<input id="spp_2" name="spp_2" class="element checkbox" <% if (stepenNaPopList.contains("2")){ %> checked <% }%>  type="checkbox" value="2" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_2">Умерена ментална ретардација</label>
 									<input id="spp_3" name="spp_3" class="element checkbox" <% if (stepenNaPopList.contains("3")){ %> checked <% }%>  type="checkbox" value="3" onchange="setKPValue(this,'stepen')"  /><label class="choice" for="spp_3">Тешка ментална ретардација</label>
@@ -363,6 +363,9 @@ ArrayList stepenNaPopList = new ArrayList();
 									
 									</div> 
 								</li>
+								
+								<input type="hidden" name="stepennapoprecenosthidden" id="stepennapoprecenosthidden" value="<%=stepenNaPop%>"/>
+								
 															
 							
 
@@ -393,48 +396,6 @@ ArrayList stepenNaPopList = new ArrayList();
 			</div>
 		</div>
 <script type="text/javascript">
-
-var listOfDijagnisisJS = 
-
-$("#saveForm").click(function() {
-	var completeStr = "";
-	var str = $( "#dijagnozihidden" ).val();
-	var all =  str.split("%%");
-	
-	for ( var i = 0; i < all.length; i++ ){
-		if(all[i].length > 0){
-			//alert(all[i] + $("#selecteddiagnosislabel" + all[i]).text());
-			completeStr = completeStr + all[i] + "||" + $("#selecteddiagnosislabel" + all[i]).text() + "%%" ;
-		}
-		
-	}
-	
-	$( "#dijagnozDescihidden" ).val(completeStr);
-	
-   
-});
-
-
-function removediagnosis(did){
-	//alert("#selecteddiagnosis"+ did);
-	var str = $( "#dijagnozihidden" ).val();
-	 
-	
-	 
-	var inputbox  = $( "#selecteddiagnosis"+ did );
-	var inputlabel  = $( "#selecteddiagnosislabel"+ did );
-	 
-	 
-	//alert(inputlabel.text());
-	
-	var texttoremove = did + "%%";
-	str = str.replace(texttoremove,"");
-	
-	$( "#dijagnozihidden" ).val(str);
-	 
-	inputbox.remove();
-	inputlabel.remove();
-};
 
 function setKPValue(value,type){
 	
