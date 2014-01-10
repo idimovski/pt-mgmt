@@ -57,11 +57,11 @@ overflow-x: auto;
 //Security :)
 if(null == session.getAttribute("userin")){
 	response.sendRedirect("login.jsp");
-	System.out.println("Redirected to login");
+	//System.out.println("Redirected to login");
 }else{
 	if(!(session.getAttribute("userin").equals(true))){
 		response.sendRedirect("login.jsp");
-		System.out.println("Redirected to login");
+		//System.out.println("Redirected to login");
 	}
 }
 %>
@@ -654,7 +654,7 @@ ArrayList stepenNaPopList = new ArrayList();
 
 <div style="display:none">
 <div id="dialog-modal" title="Внимание !!!">
-  <p>Пациентот со овој матичен број веќе постои.</p></div></div>
+  <p>Пациентот со овој реден број веќе постои.</p></div></div>
 					
 					
 					
@@ -794,11 +794,11 @@ $('#nacionalnost').change(function() {
 });
 
 
-$('#emb').change(function(){
+$('#redenbr').change(function(){
 	
-	var emb =$('#emb').val(); 
+	var emb =$('#redenbr').val(); 
 	
-	var jqxhr = $.ajax( "/validate?emb=" +emb )
+	var jqxhr = $.ajax( "/validate?redenbr=" +emb )
 	  .done(function(data,textStatus, jqXHR ) {
 	    if(data == 'found'){
 	    	$( "#dialog-modal" ).dialog({

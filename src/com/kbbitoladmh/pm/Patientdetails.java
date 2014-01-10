@@ -1,46 +1,37 @@
 package com.kbbitoladmh.pm;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
+import java.security.KeyFactory;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Projection;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.kbbitoladmh.pm.util.MessageHelper;
+import com.google.apphosting.datastore.EntityV4.Key;
 
 @SuppressWarnings("serial")
 public class Patientdetails extends HttpServlet {
 
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		 System.out.println("do get get pt");
+//		 System.out.println("do get get pt");
 		
 
 		
 		if(null == req.getSession().getAttribute("userin")){
 			resp.sendRedirect("login.jsp");
-			System.out.println("Redirected to login");
+//			System.out.println("Redirected to login");
 		}else{
 			if(!(req.getSession().getAttribute("userin").equals(true))){
 				resp.sendRedirect("login.jsp");
-				System.out.println("Redirected to login");
+//				System.out.println("Redirected to login");
 			}else{
 				
 				String key =req.getParameter("ptid");
@@ -64,8 +55,9 @@ public class Patientdetails extends HttpServlet {
 	private Entity loadpt(String stringKey) {
 		DatastoreService store = DatastoreServiceFactory.getDatastoreService();
 
-		Query getptbyid = new Query("Patient").addFilter("emb", FilterOperator.EQUAL, stringKey);
-		
+		Query getptbyid = new Query("Patient").addFilter("redenbr", FilterOperator.EQUAL, stringKey);
+
+	
 		Entity e = store.prepare(getptbyid).asSingleEntity();
 		
 		
@@ -74,7 +66,7 @@ public class Patientdetails extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("do post get pt");
+//		System.out.println("do post get pt");
 //		MessageHelper mh = new MessageHelper();
 //		boolean allRequiredPassed = true;
 //		

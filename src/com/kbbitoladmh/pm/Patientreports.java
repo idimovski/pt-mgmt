@@ -5,27 +5,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Projection;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.kbbitoladmh.pm.util.MessageHelper;
 
 @SuppressWarnings("serial")
 public class Patientreports extends HttpServlet {
+private static final Logger log = Logger.getLogger(Patientreports.class.getName());
 
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,11 +32,11 @@ public class Patientreports extends HttpServlet {
 		
 		if(null == req.getSession().getAttribute("userin")){
 			resp.sendRedirect("login.jsp");
-			System.out.println("Redirected to login");
+//			System.out.println("Redirected to login");
 		}else{
 			if(!(req.getSession().getAttribute("userin").equals(true))){
 				resp.sendRedirect("login.jsp");
-				System.out.println("Redirected to login");
+//				System.out.println("Redirected to login");
 			}else{
 				
 				 RequestDispatcher d = getServletContext().getRequestDispatcher("/preports.jsp");
@@ -55,7 +52,7 @@ public class Patientreports extends HttpServlet {
 	
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("do reports called");
+//		System.out.println("do reports called");
 		
 //		MessageHelper mh = new MessageHelper();
 		boolean allRequiredPassed = true;
@@ -86,6 +83,9 @@ public class Patientreports extends HttpServlet {
 			stepenList1.add(st);
 		}
 
+		String username = (String) req.getSession().getAttribute("username");
+
+		log.info( "report called " +username+ " pol[" + pol  + "] from[" +  FROMdate + "] todate[" + TOdate + "] nacinalnost["+ nacionalnost+ "] vidnapop[" +  vidnappop+ "] stepen[" + stepen+ "]");
 		Entity e = new Entity("Patient");
 		
 		e.setProperty("FROMden", oddobden);
@@ -124,13 +124,13 @@ public class Patientreports extends HttpServlet {
 		
 		
 		
-		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(10000));
+		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(5000));
 		
 		List<Entity> returnList = new ArrayList<>();
 		
 		
 		
-		System.out.println(stepen);
+//		System.out.println(stepen);
 		
 		if(!(stepen.equals(""))){
 			for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {

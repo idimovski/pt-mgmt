@@ -20,21 +20,21 @@ public class ValidateSN extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		
-		System.out.println("do get validate");
-		String emb = "";
-		emb = req.getParameter("emb").trim();
-		System.out.println("emb " + emb);
+//		System.out.println("do get validate");
+		String redenbr = "";
+		redenbr = req.getParameter("redenbr").trim();
+//		System.out.println("emb " + emb);
 		String response = "Notfound";
 		
-		if(emb.length()>0){
+		if(redenbr.length()>0){
 			DatastoreService store = DatastoreServiceFactory.getDatastoreService();
 	
-			Query getptbyid = new Query("Patient").addFilter("emb", FilterOperator.EQUAL, emb);
+			Query getptbyid = new Query("Patient").addFilter("redenbr", FilterOperator.EQUAL, redenbr);
 			
 			Entity e = store.prepare(getptbyid).asSingleEntity();
 			
 			if (null != e){
-				System.out.println("found");
+//				System.out.println("found");
 				response = "found";
 			}else{
 				response = "Notfound";

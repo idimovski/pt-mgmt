@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import com.kbbitoladmh.pm.util.MessageHelper;
 
 @SuppressWarnings("serial")
 public class Patientadd extends HttpServlet {
+	private static final Logger log = Logger.getLogger(Patientadd.class.getName());
 
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,11 +35,11 @@ public class Patientadd extends HttpServlet {
 		
 		if(null == req.getSession().getAttribute("userin")){
 			resp.sendRedirect("login.jsp");
-			System.out.println("Redirected to login");
+//			System.out.println("Redirected to login");
 		}else{
 			if(!(req.getSession().getAttribute("userin").equals(true))){
 				resp.sendRedirect("login.jsp");
-				System.out.println("Redirected to login");
+//				System.out.println("Redirected to login");
 			}else{
 				
 				 RequestDispatcher d = getServletContext().getRequestDispatcher("/padd.jsp");
@@ -53,7 +55,7 @@ public class Patientadd extends HttpServlet {
 	
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("do post called");
+//		System.out.println("do post called");
 		MessageHelper mh = new MessageHelper();
 		boolean allRequiredPassed = true;
 		
@@ -97,7 +99,7 @@ public class Patientadd extends HttpServlet {
 
 
 		Text dijagnozi = new Text(req.getParameter("dijagnozDescihidden"));
-		System.out.println(dijagnozi.getValue());
+//		System.out.println(dijagnozi.getValue());
 		
 		String kombiniranvid = req.getParameter("kombiniraniprechkihidden");
 		String stepennapop = req.getParameter("stepennapoprecenosthidden");
@@ -111,6 +113,9 @@ public class Patientadd extends HttpServlet {
 
 		String username = (String) req.getSession().getAttribute("username");
 		
+		log.info( "add/edit called  "+ username +" redenbr[" + redenbr  + "]");
+
+		
 		try{
 		
 			Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
@@ -120,8 +125,8 @@ public class Patientadd extends HttpServlet {
 			
 			req.setAttribute("pte", patient);
 			
-			if(emb.length()==0){
-				mh.addErrorMessage(req, "Потребен е ЕМБГ ! ");allRequiredPassed = false;
+			if(redenbr.length()==0){
+				mh.addErrorMessage(req, "Потребен е Реден Број ! ");allRequiredPassed = false;
 			}
 			if(last.length()==0){
 				mh.addErrorMessage(req, "Потребно е Име ! ");allRequiredPassed = false;
@@ -150,7 +155,7 @@ public class Patientadd extends HttpServlet {
 			
 			
 			
-			mh.addGooDMessage(req, "Пациентот со ЕМБ "+emb+" беше успешно зачуван !");allRequiredPassed = false;
+			mh.addGooDMessage(req, "Пациентот со реден број "+redenbr+" беше успешно зачуван !");allRequiredPassed = false;
 //			throw new Exception();
 		 }catch(Exception e){
 			 mh.addErrorMessage(req, "Грешка при зачувување на пациентот !");allRequiredPassed = false;
@@ -174,10 +179,10 @@ public class Patientadd extends HttpServlet {
 			Text merki, Text podatocizamerki, Text zabeleshki, String redenbr, Text promeni, String kombiniranVid, String stepenNaPop, String username) {
 		
 		Entity patient = null;
-		if ("".equals(emb)){
+		if ("".equals(redenbr)){
 			patient = new Entity("Patient");
 		}else{
-			patient = new Entity("Patient",emb);
+			patient = new Entity("Patient",redenbr);
 		}
 		
 		patient.setProperty("redenbr", redenbr);

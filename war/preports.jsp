@@ -18,7 +18,7 @@
 <head>
 
 
-<title>Нов Пациент</title>
+<title>Извештаи</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -59,11 +59,11 @@ overflow-x: auto;
 //Security :)
 if(null == session.getAttribute("userin")){
 	response.sendRedirect("login.jsp");
-	System.out.println("Redirected to login");
+	//System.out.println("Redirected to login");
 }else{
 	if(!(session.getAttribute("userin").equals(true))){
 		response.sendRedirect("login.jsp");
-		System.out.println("Redirected to login");
+		//System.out.println("Redirected to login");
 	}
 }
 %>
@@ -168,23 +168,16 @@ List stepenNaPopList = new ArrayList();
 							<td><%=i%></td>
 							<td width="100px">
 							<span style="width=100%">
-								
-<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("redenbr") %>' disabled/> -->
-								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("redenbr") %></a></label>
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("redenbr") %></a></label>
 							</span>
 							</td>
 							<td width="100px">
 							<span style="width=100%">
-								
-<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
-								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("emb") %></a></label>
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("emb") %></a></label>
 							</span>
 							</td>
 							<td>
 							<span>
-								
-								
-<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
 								<label class="description" for="element_1"><%=entity.getProperty("ime") %></label>
 							</span>
 							</td>
@@ -198,7 +191,7 @@ List stepenNaPopList = new ArrayList();
 							</li>
 							</td>
 							
-							<td><a href="details?ptid=<%=entity.getProperty("emb")%>">Детали</a></td>
+							<td><a href="details?ptid=<%=entity.getProperty("redenbr")%>">Детали</a></td>
 							</tr>
 							
 							<%

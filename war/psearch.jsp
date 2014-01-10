@@ -13,7 +13,7 @@
 <head>
 
 
-<title>Нов Пациент</title>
+<title>Пребарување</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -28,13 +28,26 @@
 //Security :)
 if(null == session.getAttribute("userin")){
 	response.sendRedirect("login.jsp");
-	System.out.println("Redirected to login");
+	//System.out.println("Redirected to login");
 }else{
 	if(!(session.getAttribute("userin").equals(true))){
 		response.sendRedirect("login.jsp");
-		System.out.println("Redirected to login");
+		//System.out.println("Redirected to login");
 	}
 }
+
+
+Entity e = (Entity) request.getAttribute("p");
+String redenbr= "";String first = ""; String last  = "";String emb= "";
+
+if(null != e){
+	first = (String) e.getProperty("ime"); if (null == first) first = "";
+	last = (String) e.getProperty("prezime"); if (null == last) last = "";
+	redenbr = (String) e.getProperty("redenbr"); if (null == last) redenbr = "";
+	emb = (String) e.getProperty("emb"); if (null == emb) emb = "";
+	
+}
+
 %>
 <%
 //INIT
@@ -62,19 +75,19 @@ if(null == session.getAttribute("userin")){
 								<li style="width:100%">
 								<span>
 									<label class="description" for="redenbr">Реден Број</label>
-									<input id="redenbr" name= "redenbr" class="element text" maxlength="255" size="15" value=""/>
+									<input id="redenbr" name= "redenbr" class="element text" maxlength="255" size="15" value="<%=redenbr%>"/>
 								</span>
 								<span>
 									<label class="description" for="emb">ЕМБ</label>
-									<input id="emb" name= "emb" class="element text" maxlength="255" size="15" value=""/>
+									<input id="emb" name= "emb" class="element text" maxlength="255" size="15" value="<%=emb%>"/>
 								</span>
 								<span>
 									<label class="description" for="ime">Име</label>
-									<input id="ime" name= "ime" class="element text" maxlength="255" size="15" value=""/>
+									<input id="ime" name= "ime" class="element text" maxlength="255" size="15" value="<%=first%>"/>
 								</span>
 								<span>
 									<label class="description" for="prezime">Презиме</label>
-									<input id="prezime" name= "prezime" class="element text" maxlength="255" size="15" value=""/>
+									<input id="prezime" name= "prezime" class="element text" maxlength="255" size="15" value="<%=last%>"/>
 								</span>
 								</li>
 							</ul>
@@ -116,37 +129,29 @@ if(null == session.getAttribute("userin")){
 							<tr>
 							<td width="100px">
 							<span style="width=100%">
-								
-<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("redenbr") %>' disabled/> -->
-								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("redenbr") %></a></label>
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("redenbr") %></a></label>
 							</span>
 							</td>
 							<td width="100px">
 							<span style="width=100%">
-								
-<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
-								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("emb")%>"><%=entity.getProperty("emb") %></a></label>
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("emb") %></a></label>
 							</span>
 							</td>
 							<td>
 							<span>
-								
-								
-<!-- 								<input  id="element_1_1" name= "element_1_1" class="element text" maxlength="255" size="8" value='<%=entity.getProperty("first") %>' disabled/> -->
 								<label class="description" for="element_1"><%=entity.getProperty("ime") %></label>
 							</span>
 							</td>
 							<td>
 							<span>
 								
-								<!-- <input id="element_1_2" name= "element_1_2" class="element text" maxlength="255" size="14" value='<%=entity.getProperty("last") %>' disabled/> -->
 								<label class="description" for="element_1"><%=entity.getProperty("prezime") %></label>
 								
 							</span> 
 							</li>
 							</td>
 							
-							<td><a href="details?ptid=<%=entity.getProperty("emb")%>">Детали</a></td>
+							<td><a href="details?ptid=<%=entity.getProperty("redenbr")%>">Детали</a></td>
 							</tr>
 							
 							<%

@@ -8,15 +8,20 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kbbitoladmh.pm.Patientadd;
 import com.kbbitoladmh.pm.model.ICD10;
 
 public class SearchICD extends HttpServlet {
+	
+	private static final Logger log = Logger.getLogger(SearchICD.class.getName());
+
 	
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,12 +29,13 @@ public class SearchICD extends HttpServlet {
 		//added a comment
 
 		String retStr= "";
-		System.out.println("termP : " + req.getParameter("term"));
+//		System.out.println("termP : " + req.getParameter("term"));
 		String term ="";
 		if (null != req.getParameter("term")){
 			term = req.getParameter("term");
 		}
 		
+		int max = 0;
 		if (!(term.equalsIgnoreCase(""))){
 		
 		List<ICD10> datalist = new ArrayList<ICD10>();
@@ -81,7 +87,7 @@ public class SearchICD extends HttpServlet {
 				
 					
 				if(datalist.size()>=100){
-					System.out.println("found 100 will break");
+//					System.out.println("found 100 will break");
 					break;
 				}
 					
@@ -97,18 +103,13 @@ public class SearchICD extends HttpServlet {
 		
 		retStr = "[";
 		
-//		[
-//		    { label: 'C++', value: 'C++' }, 
-//		    { label: 'Java', value: 'Java' }
-//		    { label: 'COBOL', value: 'COBOL' }
-//		]
 		
 		  
-		int max = datalist.size();
+		max = datalist.size();
 		if (max > 100)
 			max =100;
 		
-		System.out.println(max);
+//		System.out.println(max);
 		
 		for (int i = 0; i < max; i++) {
 			ICD10 icd = datalist.get(i);
@@ -119,12 +120,14 @@ public class SearchICD extends HttpServlet {
 			
 		}
 		retStr += "]";
-		System.out.println(retStr);
+//		System.out.println(retStr);
 		
 		
 		}
 		
+		String username = (String) req.getSession().getAttribute("username");
 
+		log.info("dijagnosisSearch " + username + " term[" +term + "] results["+max +"]");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/plain; charset=utf-8");
 		
