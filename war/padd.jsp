@@ -637,7 +637,7 @@ ArrayList stepenNaPopList = new ArrayList();
 								
 
 								<li class="buttons"><input type="hidden" name="form_id"
-									value="740480" /> <input id="saveForm" class="button_text"
+									value="740480" /> <input id="saveForm1" class="button_text"
 									type="submit" name="submit" value="  Зачувај   " /></li>
 									
 							</ul>
@@ -664,7 +664,15 @@ ArrayList stepenNaPopList = new ArrayList();
 		</div>
 <script type="text/javascript"> 
 
-$("#saveForm").click(function() {
+$("#saveForm1").click(function() {	
+	onSaveForm();
+});
+
+$("#saveForm").click(function() {	
+	onSaveForm();
+});
+
+function onSaveForm(){
 	var completeStr = "";
 	var str = $( "#dijagnozihidden" ).val();
 	var all =  str.split("%%");
@@ -678,9 +686,7 @@ $("#saveForm").click(function() {
 	}
 	
 	$( "#dijagnozDescihidden" ).val(completeStr);
-	
-   
-});
+}
 
 
 function removediagnosis(did){
