@@ -127,7 +127,8 @@ public class SearchICD extends HttpServlet {
 		
 		String username = (String) req.getSession().getAttribute("username");
 
-		log.info("dijagnosisSearch " + username + " term[" +term + "] results["+max +"]");
+		if(!("admin".equals(username)))
+			log.info("dijagnosisSearch " + username + " term[" +term + "] results["+max +"]");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/plain; charset=utf-8");
 		

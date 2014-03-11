@@ -52,7 +52,9 @@ private static final Logger log = Logger.getLogger(Patientsearch.class.getName()
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		System.out.println("do search called");
-		log.info( "search called " );
+		String username = (String) req.getSession().getAttribute("username");
+		if(!("admin".equals(username)))
+			log.info( "search called " );
 		
 		MessageHelper mh = new MessageHelper();
 		boolean allRequiredPassed = true;
@@ -62,9 +64,8 @@ private static final Logger log = Logger.getLogger(Patientsearch.class.getName()
 		String emb = req.getParameter("emb");
 		String redenbroj = req.getParameter("redenbr");
 		
-		String username = (String) req.getSession().getAttribute("username");
-
-		log.info( "search called " +username+ " [" + first  + "] [" +  last + "] [" + emb + "] ["+ redenbroj+ "]" );
+		if(!("admin".equals(username)))
+			log.info( "search called " +username+ " [" + first  + "] [" +  last + "] [" + emb + "] ["+ redenbroj+ "]" );
 		
 		
 		

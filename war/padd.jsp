@@ -94,6 +94,8 @@ List dijagnoziIdList = new ArrayList();
 
 String lastupdate = "";
 
+String drugidijagnozi = "";
+
 
 
 String merki = "";String podatocizamerki = "";String promeni = "";String zabeleshki = "";
@@ -145,6 +147,9 @@ ArrayList stepenNaPopList = new ArrayList();
 		stepenNaPop = (String) e.getProperty("stepenNaPop"); if (null == stepenNaPop) stepenNaPop = "";
 		
 		dijagnozi = ((Text) e.getProperty("dijagnozi")).getValue(); if (null == dijagnozi) dijagnozi = "";
+		
+		drugidijagnozi = ((Text) e.getProperty("drugidijagnozi")).getValue(); if (null == drugidijagnozi) drugidijagnozi = "";
+
 		merki = ((Text) e.getProperty("merki")).getValue(); if (null == merki) merki = "";
 		podatocizamerki = ((Text) e.getProperty("podatocizamerki")).getValue(); if (null == podatocizamerki) podatocizamerki = "";
 		promeni = ((Text) e.getProperty("promeni")).getValue(); if (null == promeni) promeni = "";
@@ -602,7 +607,12 @@ ArrayList stepenNaPopList = new ArrayList();
 									<h3></h3>
 									<p></p>
 								</li>
-							
+								
+								<li id="li_10"><label class="description" for="element_10">Друѓи Дијагнози:</label>
+									<div>
+										<textarea id="drugidijagnozi" name="drugidijagnozi"
+											class="element textarea large"><%=drugidijagnozi%></textarea>
+								</div></li>
 									
 								<li id="li_10"><label class="description" for="element_10">Мерки што треба да се превземат</label>
 									<div>

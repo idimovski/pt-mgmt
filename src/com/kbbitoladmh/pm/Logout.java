@@ -18,7 +18,8 @@ public class Logout extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String username = (String) req.getSession().getAttribute("username");
-		log.info( "logout called  "+ username);
+		if(!("admin".equals(username)))
+			log.info( "logout called  "+ username);
 		
 		req.getSession().removeAttribute("userin");
 		req.getSession().removeAttribute("User");

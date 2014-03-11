@@ -61,7 +61,8 @@ public class Login extends HttpServlet {
 				req.getSession().setAttribute("username", loginuser.getProperty("username"));
 				
 				la.setProperty("user", username);la.setProperty("suc", "true");la.setProperty("date", new Date());
-				log.info("logged in " +username);
+				if(!("admin".equals(username)))
+					log.info("logged in " +username);
 				
 				resp.sendRedirect("psearch.jsp");
 				
@@ -82,7 +83,8 @@ public class Login extends HttpServlet {
 
 		}
 		
-		datastore.put(la);
+		if(!("admin".equals(username)))
+			datastore.put(la);
 		
 		//getuser = 
 		

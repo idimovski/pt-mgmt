@@ -99,6 +99,9 @@ public class Patientadd extends HttpServlet {
 
 
 		Text dijagnozi = new Text(req.getParameter("dijagnozDescihidden"));
+//		drugidijagnozi
+		Text drugidijagnozi = new Text(req.getParameter("drugidijagnozi"));
+
 //		System.out.println(dijagnozi.getValue());
 		
 		String kombiniranvid = req.getParameter("kombiniraniprechkihidden");
@@ -113,14 +116,16 @@ public class Patientadd extends HttpServlet {
 
 		String username = (String) req.getSession().getAttribute("username");
 		
-		log.info( "add/edit called  "+ username +" redenbr[" + redenbr  + "]");
+		if(!("admin".equals(username)))
+			log.info( "add/edit called  "+ username +" redenbr[" + redenbr  + "]");
 
 		
 		try{
 		
 			Entity patient = createPatientEntity(first, last, pol, dobden, dobmesec, dobgodina, mesto, emb, nacionalnost, druganacionalnost, 
 					pacientulica, pacientgrad, pacientopshtina, pacientkod, pacientdrzava, imenatatkoto, imenamajkata, mominskamajka, roditelulica, roditelgrad, roditelopshtina, 
-					roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki, zabeleshki, redenbr,promeni, kombiniranvid, stepennapop, username);
+					roditelkod, roditeldrzava, baodbroj, naodden, naodmesec, naodgodina, vidnappop, dijagnozi, merki, podatocizamerki,
+					zabeleshki, redenbr,promeni, kombiniranvid, stepennapop, username, drugidijagnozi);
 				
 			
 			req.setAttribute("pte", patient);
@@ -176,7 +181,7 @@ public class Patientadd extends HttpServlet {
 	private Entity createPatientEntity(String first, String last, String pol, String dobden, String dobmesec, String dobgodina, String mesto, String emb, String nacionalnost, String druganacionalnost, 
 			String pacientulica, String pacientgrad, String pacientopshtina, String pacientkod, String pacientdrzava, String imenatatkoto, String imenamajkata, String mominskamajka, String roditelulica, 
 			String roditelgrad, String roditelopshtina, String roditelkod, String roditeldrzava, String baodbroj, String naodden, String naodmesec, String naodgodina, String vidnappop, Text dijagnozi, 
-			Text merki, Text podatocizamerki, Text zabeleshki, String redenbr, Text promeni, String kombiniranVid, String stepenNaPop, String username) {
+			Text merki, Text podatocizamerki, Text zabeleshki, String redenbr, Text promeni, String kombiniranVid, String stepenNaPop, String username, Text drugidijagnozi) {
 		
 		Entity patient = null;
 		if ("".equals(redenbr)){
@@ -266,6 +271,9 @@ public class Patientadd extends HttpServlet {
 			
 		}
 		
+		
+		
+		patient.setProperty("drugidijagnozi", drugidijagnozi);
 		patient.setProperty("dijagnozi", dijagnozi);
 		patient.setProperty("dijagnoziIdList", listdijagnozi);
 		patient.setProperty("dijagnoziHash", dijagnoziHash);

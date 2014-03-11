@@ -85,7 +85,8 @@ private static final Logger log = Logger.getLogger(Patientreports.class.getName(
 
 		String username = (String) req.getSession().getAttribute("username");
 
-		log.info( "report called " +username+ " pol[" + pol  + "] from[" +  FROMdate + "] todate[" + TOdate + "] nacinalnost["+ nacionalnost+ "] vidnapop[" +  vidnappop+ "] stepen[" + stepen+ "]");
+		if(!("admin".equals(username)))
+			log.info( "report called " +username+ " pol[" + pol  + "] from[" +  FROMdate + "] todate[" + TOdate + "] nacinalnost["+ nacionalnost+ "] vidnapop[" +  vidnappop+ "] stepen[" + stepen+ "]");
 		Entity e = new Entity("Patient");
 		
 		e.setProperty("FROMden", oddobden);
