@@ -608,7 +608,7 @@ ArrayList stepenNaPopList = new ArrayList();
 									<p></p>
 								</li>
 								
-								<li id="li_10"><label class="description" for="element_10">Друѓи Дијагнози</label>
+								<li id="li_10"><label class="description" for="element_10">Други Дијагнози</label>
 									<div>
 										<textarea id="drugidijagnozi" name="drugidijagnozi"
 											class="element textarea large"><%=drugidijagnozi%></textarea>
