@@ -148,7 +148,7 @@ ArrayList stepenNaPopList = new ArrayList();
 		
 		dijagnozi = ((Text) e.getProperty("dijagnozi")).getValue(); if (null == dijagnozi) dijagnozi = "";
 		
-		drugidijagnozi = ((Text) e.getProperty("drugidijagnozi")).getValue(); if (null == drugidijagnozi) drugidijagnozi = "";
+		Text drugidijagnoziT = ((Text) e.getProperty("drugidijagnozi")); if (null == drugidijagnozi) drugidijagnozi = "";	if (null != drugidijagnoziT) drugidijagnozi = drugidijagnoziT.getValue();
 
 		merki = ((Text) e.getProperty("merki")).getValue(); if (null == merki) merki = "";
 		podatocizamerki = ((Text) e.getProperty("podatocizamerki")).getValue(); if (null == podatocizamerki) podatocizamerki = "";
@@ -483,7 +483,7 @@ ArrayList stepenNaPopList = new ArrayList();
 								</li>
 								
 								<li id="vidnappopli" >
-									<label class="description" for="vidnappop">Вид на попреченост:</label>
+									<label class="description" for="vidnappop">Вид на попреченост</label>
 									<div>
 									<select class="element select large" id="vidnappop" name="vidnappop"> 
 									<option value="" <%if(vidnappop.equals("")){ %>selected="selected"<%} %>></option>
@@ -505,7 +505,7 @@ ArrayList stepenNaPopList = new ArrayList();
 											
 								<div id='kombiniranvid'>								
 								<li id="kombiniranvid" >
-								<label class="description" for="element_7">Вид на комбинирана психофизичка попреченост: </label>
+								<label class="description" for="element_7">Вид на комбинирана психофизичка попреченост </label>
 								<span>
 								<input id="vsnp_7_1" name="vsnp_7_1" class="element checkbox" type="checkbox" value="1" onchange="setKPValue(this,'vid')" <%if(kombiniranVidList.contains("1")){ %> checked <%}%> />
 								<label class="choice" for="vsnp_7_1">Пречки во психичкиот развој</label>
@@ -534,7 +534,7 @@ ArrayList stepenNaPopList = new ArrayList();
 								<li id="li_4" >
 									<div >
 									
-									<label class="description" for="element_4">Степен на попреченост:</label>
+									<label class="description" for="element_4">Степен на попреченост</label>
 									
 									
 									<span>
@@ -580,7 +580,7 @@ ArrayList stepenNaPopList = new ArrayList();
 									</p>
 								</li>
 								
-								<li id="linkeddijagnosis"><label class="description" for="vsnp_7_1">Дијагнози:</label>
+								<li id="linkeddijagnosis"><label class="description" for="vsnp_7_1">Дијагнози</label>
 								
 								<div id ='linkeddijagnosisdiv'>				
 								<%
@@ -608,7 +608,7 @@ ArrayList stepenNaPopList = new ArrayList();
 									<p></p>
 								</li>
 								
-								<li id="li_10"><label class="description" for="element_10">Друѓи Дијагнози:</label>
+								<li id="li_10"><label class="description" for="element_10">Друѓи Дијагнози</label>
 									<div>
 										<textarea id="drugidijagnozi" name="drugidijagnozi"
 											class="element textarea large"><%=drugidijagnozi%></textarea>
