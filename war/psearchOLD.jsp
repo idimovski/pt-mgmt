@@ -18,14 +18,12 @@
 <meta name="keywords" content="">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
-<link href="css/pagingStyles.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="css/view1.css">
+<link rel="stylesheet" type="text/css" href="css/view.css" media="all">
 <link href="css/style.css" rel="stylesheet" type="text/css">
-
+<link href="css/pagingStyles.css" rel="stylesheet" type="text/css">
 
 <script src="JS/jquery-1.10.2.min.js"></script>
 <script src="JS/jquery-ui.js"></script>
-<script src="JS/myjs.js"></script>
 
 <script src="JS/quickpager.jquery.js"></script>
 <script src="JS/jquery.quick.pagination.min.js"></script>
@@ -36,16 +34,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// $("ul.pagination1").quickPagination();
-	
-	$("ul.pagination1").quickPagination({pagerLocation:"both",pageSize:'10'});
-	//$("ul.pagination2").quickPager({pagerLocation:"both"});
-	
+	$("ul.pagination1").quickPager();
+	//$("ul.pagination2").quickPagination({pagerLocation:"both"});
+	//$("ul.pagination3").quickPagination({pagerLocation:"both",pageSize:"3"});
 });
-
-
-
-
 </script>
 
 
@@ -98,7 +90,6 @@ if(null != e){
 								<h2>Пребарај пациент</h2>
 
 							</div>
-						
 							<ul>
 								<li style="width:100%">
 								<span>
@@ -124,77 +115,82 @@ if(null != e){
 									value="740480" /> <input id="saveForm" class="button_text"
 									type="submit" name="submit" value="  Барај   " /></li>
 					
-						
 					
 				
 					
-					
-					
+					<ul>
 					
 					<br/>
 						<br/>
-						
-					<!--<table border="0" width="100%">
-							<tr>
-							<td>Реден Број</td>
-							<td>ЕМБ</td>
-							<td>Име</td>
-							<td>Презиме</td>
-							</tr>
-						</table>
-						-->
-					<!-- <label class="description" for="element_1">Пациенти:</label> -->
-					<ul class="pagination1">
 					<%
 					if(null!=request.getAttribute("allpts")){
 						List<Entity> allpts = (List) request.getAttribute("allpts");
 						
-						%><%
+						%><label class="description" for="element_1">Пациенти:</label>
+					
 						
+						<li>
 						
+					
+						</li>
+						
+						<table border="0" width="100%">
+						<tr>
+						<td>Реден Број</td>
+						<td>ЕМБ</td>
+						<td>Име</td>
+						<td>Презиме</td>
+						</tr>
+							
+						<%
+								
 						boolean firstrow = true;
 						for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
 							Entity entity = (Entity) iterator.next();
 							%>
 							
 						
-							<% if(firstrow) {%>	
-						<!-- 	<li>
-							<table width = '100%' border="0">
-							  <tr>
-							    <td width="20%"><label  class="description">Реден Број</label></td>
-							    <td width="30%"><label  class="description">Име</label></td>
-							    <td width="30%"><label  class="description">Презиме</label></td>
-							    <td width="5%" align="right"></td>
-							  </tr>
-							</table>
-
-							</li> -->
-							<%} %>
+									
 							
-							<li onclick='openPart(<%=entity.getProperty("redenbr")%>)'>
-							<table width = '100%' border="0" style="cursor: pointer;">
-							  <tr style="cursor: pointer;">
-							    <td width="20%"><label  class="description" style="cursor: pointer;"><%=entity.getProperty("redenbr") %></label></td>
-							    <td width="30%"><label  class="description" style="cursor: pointer;"><%=entity.getProperty("ime") %></label></td>
-							    <td width="30%"><label  class="description" style="cursor: pointer;"><%=entity.getProperty("prezime") %></label></td>
-							    <td width="5%" align="right" style="cursor: pointer;"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><font style="font-weight:bold" size='2' face="arial" color="black">Детали</font></a></td>
-							  </tr>
-							</table>
-
+							
+							
+							
+							<tr>
+							<td width="100px">
+							<span style="width=100%">
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("redenbr") %></a></label>
+							</span>
+							</td>
+							<td width="100px">
+							<span style="width=100%">
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("emb") %></a></label>
+							</span>
+							</td>
+							<td>
+							<span>
+								<label class="description" for="element_1"><%=entity.getProperty("ime") %></label>
+							</span>
+							</td>
+							<td>
+							<span>
+								
+								<label class="description" for="element_1"><%=entity.getProperty("prezime") %></label>
+								
+							</span> 
 							</li>
+							</td>
 							
+							<td><a href="details?ptid=<%=entity.getProperty("redenbr")%>">Детали</a></td>
+							</tr>
 							
 							<%
 							firstrow = false;
 						}
-						
 					}
 					%>
+				
+					</table>
 					</ul>
-				
-				
-					
 					
 					</form>
 						<div id="footer">

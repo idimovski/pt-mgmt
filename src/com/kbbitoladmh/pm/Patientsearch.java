@@ -80,7 +80,7 @@ private static final Logger log = Logger.getLogger(Patientsearch.class.getName()
 
 		
 		
-		Query allptsquesry  = new Query("Patient").addSort("ime", SortDirection.ASCENDING);
+		Query allptsquesry  = new Query("Patient").addSort("redenbr", SortDirection.ASCENDING);
 		
 		if(!("".equals(first))) allptsquesry.addFilter("imeCL",FilterOperator.EQUAL,first.toLowerCase());
 		if(!("".equals(last))) allptsquesry.addFilter("prezimeCL",FilterOperator.EQUAL,last.toLowerCase());
@@ -93,7 +93,7 @@ private static final Logger log = Logger.getLogger(Patientsearch.class.getName()
 		
 		
 		
-		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(50));
+		List<Entity> allpts = (List<Entity>) datastore.prepare(allptsquesry).asList(FetchOptions.Builder.withLimit(100));
 		
 		
 		req.setAttribute("allpts", allpts);

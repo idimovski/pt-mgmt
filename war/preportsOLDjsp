@@ -23,34 +23,14 @@
 <meta name="keywords" content="">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<link rel="stylesheet" type="text/css" href="css/view1.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/view.css" media="all">
 <link href="css/style.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="css/jquery-ui.css" />
-  
-<link href="css/pagingStyles.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/jquery-ui.css" />
 
 <script type="text/javascript" src="JS/view.js"></script>
 <script type="text/javascript" src="JS/calendar.js"></script>
-<script type="text/javascript" src="JS/myjs.js"></script>
-
 <script src="JS/jquery-1.10.2.min.js"></script>
 <script src="JS/jquery-ui.js"></script>
-
-
-<script src="JS/quickpager.jquery.js"></script>
-<script src="JS/jquery.quick.pagination.min.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-
-	// $("ul.pagination1").quickPagination();
-	
-	$("ul.pagination1").quickPagination({pagerLocation:"both",pageSize:'10'});
-	//$("ul.pagination2").quickPager({pagerLocation:"both"});
-	
-});
-</script>
-
 <style type="text/css">
 .ui-autocomplete-input{
 width:80%;
@@ -157,60 +137,70 @@ List stepenNaPopList = new ArrayList();
 							</div>
 							
 							
-							
+							<ul>
 					
 					<br/>
 						<br/>
-						
-					
-					</ul>
 					<%
 					if(null!=request.getAttribute("allpts")){
 						List<Entity> allpts = (List) request.getAttribute("allpts");
 						
 						%><label class="description" for="element_1">Пациенти (<%=allpts.size() %>):</label>
 					
-						<ul class="pagination1">
-						<%			
+						
+						<table border="1" style="border-width: 0" width="100%">
+						<tr>
+						<td>#</td>
+						<td>Реден Број</td>
+						<td>ЕМБ</td>
+						<td>Име</td>
+						<td>Презиме</td>
+						</tr>
+						<%
+								
 						boolean firstrow = true;
 						int i = 0;
 						for (Iterator iterator = allpts.iterator(); iterator.hasNext();) {
 							Entity entity = (Entity) iterator.next();
 							i++;
 							%>
-							
-							<li onclick='openPart(<%=entity.getProperty("redenbr")%>)' style="cursor: pointer;">
-							<table width='100%' style="cursor: pointer;">
-								<tr style="cursor: pointer;">
-								<td><label class="description" style="cursor: pointer;"><%=i%></td>
-								<td width="20%">
-									<label class="description" style="cursor: pointer;"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><font style="font-weight:bold" size='2' face="arial" color="black"><%=entity.getProperty("redenbr") %></font></a></label>
-								</td>
-								<td width="30%">
-									<label class="description" style="cursor: pointer;"><%=entity.getProperty("ime") %></label>
-								</td>
-								<td width="30%">
-									<label class="description" style="cursor: pointer;"><%=entity.getProperty("prezime") %></label>
-								</td>
+							<tr>
+							<td><%=i%></td>
+							<td width="100px">
+							<span style="width=100%">
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("redenbr") %></a></label>
+							</span>
+							</td>
+							<td width="100px">
+							<span style="width=100%">
+								<label class="description" for="element_1"><a href="details?ptid=<%=entity.getProperty("redenbr")%>"><%=entity.getProperty("emb") %></a></label>
+							</span>
+							</td>
+							<td>
+							<span>
+								<label class="description" for="element_1"><%=entity.getProperty("ime") %></label>
+							</span>
+							</td>
+							<td>
+							<span>
 								
-								<td width="10%">
-									<a href="details?ptid=<%=entity.getProperty("redenbr")%>"><font style="font-weight:bold" size='2' face="arial" color="black">Детали</font></a>
-								</td>
-								</tr>
-							</table>
+								<!-- <input id="element_1_2" name= "element_1_2" class="element text" maxlength="255" size="14" value='<%=entity.getProperty("last") %>' disabled/> -->
+								<label class="description" for="element_1"><%=entity.getProperty("prezime") %></label>
+								
+							</span> 
 							</li>
+							</td>
 							
-							
+							<td><a href="details?ptid=<%=entity.getProperty("redenbr")%>">Детали</a></td>
+							</tr>
 							
 							<%
 							firstrow = false;
 						}
-						
 					}
 					%>
+					</table>
 					</ul>
-				
-					
 							<ul>
 							
 							<li class="section_break">
