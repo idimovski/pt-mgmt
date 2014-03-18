@@ -27,8 +27,12 @@
 <link rel="stylesheet" href="css/jquery-ui.css" />
 <script type="text/javascript" src="JS/view.js"></script>
 <script type="text/javascript" src="JS/calendar.js"></script>
+
+<script type="text/javascript" src="JS/myjs.js"></script>
+
 <script src="JS/jquery-1.10.2.min.js"></script>
 <script src="JS/jquery-ui.js"></script>
+
 <style type="text/css">
 .ui-autocomplete-input{
 width:80%;
@@ -224,7 +228,7 @@ ArrayList stepenNaPopList = new ArrayList();
 									<div>
 										<input id="redenbr" name="redenbr"
 											class="element text small" type="text" maxlength="255"
-											value='<%=redenbr%>' />
+											value='<%=redenbr%>' <%if(redenbr.length()>0){ %>disabled="disabled"<%} %>/>
 									</div>
 									<p class="guidelines" id="guide_2">
 										<small>Реден Број</small>
@@ -664,7 +668,7 @@ ArrayList stepenNaPopList = new ArrayList();
 
 <div style="display:none">
 <div id="dialog-modal" title="Внимание !!!">
-  <p>Пациентот со овој реден број веќе постои.</p></div></div>
+  <p id='dialogtext'>Пациентот со овој реден број веќе постои.</p></div></div>
 					
 					
 					
@@ -812,14 +816,25 @@ $('#nacionalnost').change(function() {
 
 $('#redenbr').change(function(){
 	
-	var emb =$('#redenbr').val(); 
+	var id =$('#redenbr').val(); 
 	
-	var jqxhr = $.ajax( "/validate?redenbr=" +emb )
+	var jqxhr = $.ajax( "/validate?redenbr=" +id )
 	  .done(function(data,textStatus, jqXHR ) {
 	    if(data == 'found'){
+	    	$('#dialogtext').text("Пациентот со реден број " + id + " веќе постои.");
 	    	$( "#dialog-modal" ).dialog({
 	    	    height: 140,
-	    	    modal: true
+	    	    width:350,
+	    	    modal: true,
+	    	    buttons: {
+	    	        "Детали за Пациентот": function() {
+	    	        	openPart(id);
+	    	        },
+	    	        "Нов Пациент": function() {
+	    	        	openPart('');
+	    	        }
+	    	    	
+	    	      }
 	    	  });
 
 	    	
