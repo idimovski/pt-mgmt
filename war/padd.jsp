@@ -222,6 +222,9 @@ ArrayList stepenNaPopList = new ArrayList();
 									type="submit" name="submit" value="  Зачувај   " />	</h2>
 
 							</div>
+							<div style="display:none">
+<div id="dialog-modal" title="Внимание !!!">
+  <p id='dialogtext'>Пациентот со овој реден број веќе постои.</p></div></div>
 							<ul>
 							
 								<li id="li_1"><label class="description" for="element_1">Реден Број</label>
@@ -666,9 +669,7 @@ ArrayList stepenNaPopList = new ArrayList();
 					</div>
 					<img id="bottom" src="images/bottom.png" alt="">
 
-<div style="display:none">
-<div id="dialog-modal" title="Внимание !!!">
-  <p id='dialogtext'>Пациентот со овој реден број веќе постои.</p></div></div>
+
 					
 					
 					
