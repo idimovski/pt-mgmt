@@ -171,6 +171,7 @@ private static final Logger log = Logger.getLogger(Patientreports.class.getName(
 		
 		
 		req.setAttribute("allpts", returnList);
+		req.getSession().setAttribute("reportResults", returnList);
 		
 	
 		RequestDispatcher d = getServletContext().getRequestDispatcher("/preports.jsp");

@@ -164,6 +164,7 @@ public class Patientadd extends HttpServlet {
 //			throw new Exception();
 		 }catch(Exception e){
 			 mh.addErrorMessage(req, "Грешка при зачувување на пациентот !");allRequiredPassed = false;
+			 e.printStackTrace();
 		 }
 	
 		 

@@ -232,6 +232,7 @@ ArrayList stepenNaPopList = new ArrayList();
 										<input id="redenbr" name="redenbr"
 											class="element text small" type="text" maxlength="255"
 											value='<%=redenbr%>' <%if(redenbr.length()>0){ %>disabled="disabled"<%} %>/>
+										<input type="hidden" id="redenbr" name="redenbr"	value='<%=redenbr%>'/>
 									</div>
 									<p class="guidelines" id="guide_2">
 										<small>Реден Број</small>
